@@ -7,7 +7,7 @@ namespace AppRepoTest
     {
         static void Main(string[] args)
         {
-            int cond = 0;
+            int cond = 1;
 
             while(cond != 69) 
             {
