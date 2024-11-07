@@ -9,6 +9,7 @@
 //    <description></description>
 //-----------------------------------------------------------------
 using System;
+using System.Data;
 
 
 namespace AlturaMedia
@@ -18,16 +19,29 @@ namespace AlturaMedia
         static void Main(string[] args)
         {
             int nPessoas = 0;
-            Console.WriteLine("Quantas alturas de pessoas vai introduzir: ");
+
+            Console.Write("Quantas alturas de pessoas vai introduzir: ");
             nPessoas = int.Parse(Console.ReadLine());
 
             double[] alturas = new double[nPessoas];
+            double media = 0;
+            double total = 0;
 
-            for(int i = 0; i < nPessoas; i++)
+            for (int i = 0; i < nPessoas; i++)
             {
-                Console.WriteLine("Introduza a altura da " + (i + 1) + "ª pessoa: ");
+                Console.Write("\nIntroduza a altura da " + (i + 1) + "ª pessoa: ");
                 alturas[i] = double.Parse(Console.ReadLine());
             }
+
+            foreach (double i in alturas)
+            {
+                media += i; 
+            }
+
+            total = media / nPessoas;
+            Console.Write($"\nA média das alturas é: {total}");
+
+            Console.ReadKey();
         }
     }
 }
