@@ -1,4 +1,14 @@
-﻿using System;
+﻿//-----------------------------------------------------------------
+//    <copyright file="AlturaMedia"    company="IPCA">
+//     Copyright (c) IPCA-EST 2024. All rights reserved.
+//    </copyright>
+//    <date>2024-11-07</date>
+//    <time>12:10</time>
+//    <version>0.1</version>
+//    <author>D.Oliveira</author>
+//    <description></description>
+//-----------------------------------------------------------------
+using System;
 
 
 namespace AlturaMedia
