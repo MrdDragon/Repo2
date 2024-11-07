@@ -39,7 +39,7 @@ namespace AlturaMedia
             }
 
             total = media / nPessoas;
-            Console.Write($"\nA média das alturas é: {total}");
+            Console.Write($"\nA média das alturas é: {total:F2}");
 
             Console.ReadKey();
         }
