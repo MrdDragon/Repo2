@@ -1,4 +1,15 @@
-﻿using System;
+﻿//-----------------------------------------------------------------
+//    <copyright file="Progam.cs"    company="IPCA">
+//     Copyright (c) IPCA-EST 2024. All rights reserved.
+//    </copyright>
+//    <date>2024-11-12</date>
+//    <time>11:10</time>
+//    <version>0.1</version>
+//    <author>Daniel Oliveira</author>
+//    <description></description>
+//-----------------------------------------------------------------
+
+using System;
 
 
 namespace JogoAdivinhaNumero
