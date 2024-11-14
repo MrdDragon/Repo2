@@ -16,6 +16,8 @@ namespace WindowsFormTest
         {
             InitializeComponent();
             DisplayData();
+            this.dataGridView1.RowHeaderMouseClick += new DataGridViewCellMouseEventHandler(this.dataGridView1_RowHeaderMouseClick);
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -36,18 +38,22 @@ namespace WindowsFormTest
         {
             if (ID != 0)
             {
-                cmd = new SqlCommand("delete tbl_NCidade where ID=@id", con);
-                con.Open();
-                cmd.Parameters.AddWithValue("@id", ID);
-                cmd.ExecuteNonQuery();
-                con.Close();
-                MessageBox.Show("Registo apagado com sucesso!");
-                DisplayData();
-                ClearData();
+                DialogResult dialogResult = MessageBox.Show("Tem certeza que deseja apagar este registo?", "Confirmação de Exclusão", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    cmd = new SqlCommand("DELETE FROM tbl_NCidade WHERE ID=@ID", con);
+                    con.Open();
+                    cmd.Parameters.AddWithValue("@ID", ID);
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                    MessageBox.Show("Registo apagado com sucesso!");
+                    DisplayData();
+                    ClearData();
+                }
             }
             else
             {
-                MessageBox.Show("Porfavor selecione registo para apagar");
+                MessageBox.Show("Por favor selecione registo para apagar!");
             }
         }
 
@@ -55,16 +61,19 @@ namespace WindowsFormTest
         {
             if(txt_Nome.Text != "" && txt_Cidade.Text != "")
             {
-                cmd = new SqlCommand("update tbl_NCidade set Nome=@nome,Cidade=@cidade where ID=@id", con);
-                con.Open();
-                cmd.Parameters.AddWithValue("@id", ID);
-                cmd.Parameters.AddWithValue("@nome", txt_Nome.Text);
-                cmd.Parameters.AddWithValue("@cidade", txt_Cidade.Text);
-                cmd.ExecuteNonQuery();
-                MessageBox.Show("Dados Atualizados com Sucesso");
-                con.Close();
-                DisplayData();
-                ClearData();
+                DialogResult dialogResult = MessageBox.Show("Tem certeza que deseja adicionar este registo?", "Confirmação de Registo", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    cmd = new SqlCommand("INSERT INTO tbl_NCidade(Nome, Cidade) VALUES (@Nome,@Cidade)", con);
+                    con.Open();
+                    cmd.Parameters.AddWithValue("@Nome", txt_Nome.Text);
+                    cmd.Parameters.AddWithValue("@Cidade", txt_Cidade.Text);
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Dados Inseridos com Sucesso");
+                    con.Close();
+                    DisplayData();
+                    ClearData();
+                }
             }
             else
             {
@@ -98,25 +107,30 @@ namespace WindowsFormTest
             txt_Nome.Text = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
             txt_Cidade.Text = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
         }
+        
 
         private void bt_Atualizar_Click(object sender, EventArgs e)
         {
-            if (txt_Nome.Text != "" && txt_Cidade.Text != "")
+            if (txt_Nome.Text != "" && txt_Cidade.Text != "" && ID != 0)
             {
-                cmd = new SqlCommand("update tbl_NCidade set Nome=@nome,Cidade=@cidade where ID=@id", con);
-                con.Open();
-                cmd.Parameters.AddWithValue("@id", ID);
-                cmd.Parameters.AddWithValue("@nome", txt_Nome.Text);
-                cmd.Parameters.AddWithValue("@cidade", txt_Cidade.Text);
-                cmd.ExecuteNonQuery();
-                MessageBox.Show("Dados Atualizados com Sucesso");
-                con.Close();
-                DisplayData();
-                ClearData();
+                DialogResult dialogResult = MessageBox.Show("Tem certeza que deseja atualizar este registo?", "Confirmação de Alteração", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    cmd = new SqlCommand("Update tbl_NCidade set Nome=@nome,Cidade=@cidade Where ID=@Id", con);
+                    con.Open();
+                    cmd.Parameters.AddWithValue("@Id", ID);
+                    cmd.Parameters.AddWithValue("@Nome", txt_Nome.Text);
+                    cmd.Parameters.AddWithValue("@Cidade", txt_Cidade.Text);
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Dados Atualizados com Sucesso!");
+                    con.Close();
+                    DisplayData();
+                    ClearData();
+                }
             }
             else
             {
-                MessageBox.Show("Porfavor Selectiona Registo para Atualizar");
+                MessageBox.Show("Por favor Selectiona Registo para Atualizar!");
             }
         }
     }
