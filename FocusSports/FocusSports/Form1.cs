@@ -125,6 +125,7 @@ namespace FocusSports
             }
         }
 
+        //Muda a cor do funda dac caixa de texto
         private void txt_Nome_Enter(object sender, EventArgs e)
         {
             txt_Nome.BackColor = Color.AliceBlue;
@@ -159,6 +160,7 @@ namespace FocusSports
         {
             this.Hide();
             FMenu fMenu = new FMenu();
+            fMenu.Permissoes("Administrador");
             fMenu.ShowDialog();
             this.Close();
         }

@@ -91,11 +91,12 @@
             // 
             this.labelSelecao.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelSelecao.AutoSize = true;
-            this.labelSelecao.Location = new System.Drawing.Point(550, 9);
+            this.labelSelecao.Location = new System.Drawing.Point(549, 9);
             this.labelSelecao.Name = "labelSelecao";
-            this.labelSelecao.Size = new System.Drawing.Size(94, 16);
+            this.labelSelecao.Size = new System.Drawing.Size(84, 16);
             this.labelSelecao.TabIndex = 1;
-            this.labelSelecao.Text = "\"Selecionado\"";
+            this.labelSelecao.Text = "Selecionado";
+            this.labelSelecao.Visible = false;
             // 
             // flowLayoutCima
             // 

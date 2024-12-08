@@ -39,7 +39,7 @@ namespace FocusSports
                 btnAdmin.Visible = false;
                 btnStocks.Visible = false;
                 dataGridView1.Visible = false;
-                btnCliente_Click(btnCliente, EventArgs.Empty);
+                btnCliente_Click(btnCliente, EventArgs.Empty); //Executa o evento Click do botão Cliente
             }
         }
 
