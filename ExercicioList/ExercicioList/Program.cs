@@ -20,6 +20,7 @@ namespace ExercicioList
             {
                 Console.WriteLine("\t"+nome);
             }
+
             Console.ReadKey();
         }
     }
