@@ -24,6 +24,7 @@ namespace EparMetodo
         {
             if (numP <= 1)
                 return false;
+
             for (int i =2; i <= Math.Sqrt(numP); i++)
             {
                 if(numP % i == 0)
