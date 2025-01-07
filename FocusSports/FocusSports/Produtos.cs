@@ -18,6 +18,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace FocusSports
 {
@@ -28,6 +29,26 @@ namespace FocusSports
         SqlCommand cmd;
         SqlDataAdapter adapt;
 
+        int id = 0;
+
+        public void Permissoes(string permissoes)
+        {
+            if(permissoes == "Vendas")
+            {
+                pBAdd.Visible = false;
+                btnAdd.Visible = false;
+                pBApagar.Visible = false;
+                btnApagar.Visible = false;
+                pBEditar.Visible = false;
+                btnEditar.Visible = false;
+            }
+            else if (permissoes == "Stocks")
+            {
+                pBApagar.Visible = false;
+                btnApagar.Visible = false;
+            }
+        }
+
         public Produtos()
         {
             conn = new SqlConnection(conString);
@@ -35,7 +56,7 @@ namespace FocusSports
             MostraTodosProdutos();
         }
 
-        private void MostraTodosProdutos()
+        public void MostraTodosProdutos()
         {
             conn.Open();
             DataTable dt = new DataTable();
@@ -80,6 +101,39 @@ namespace FocusSports
         private void btnSup_Click(object sender, EventArgs e)
         {
             MostraTipos("Suplemento");
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnTodos_Click(object sender, EventArgs e)
+        {
+            MostraTodosProdutos();
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            AddProduto addProduto = new AddProduto();
+            addProduto.ShowDialog();
+        }
+
+        private void dataGridProdutos_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridProdutos.Rows[e.RowIndex].Cells[0].Value != null)
+            {
+                id = Convert.ToInt32(dataGridProdutos.Rows[e.RowIndex].Cells[0].Value.ToString());
+                pictureBoxPreview.ImageLocation = dataGridProdutos.Rows[e.RowIndex].Cells[9].Value.ToString();
+                btnEditar.Enabled = true;
+                btnApagar.Enabled = true;
+            }
+
         }
     }
 }

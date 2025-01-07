@@ -38,6 +38,7 @@ namespace FocusSports
                 btnUti.Visible = false;
                 btnAdmin.Visible = false;
                 btnStocks.Visible = false;
+                btnCliente.Visible = false;
                 dataGridView1.Visible = false;
                 btnCliente_Click(btnCliente, EventArgs.Empty); //Executa o evento Click do botão Cliente
             }
@@ -47,7 +48,6 @@ namespace FocusSports
         {
             conn = new SqlConnection(conString);
             InitializeComponent();
-            MostraClientes();
             
         }
 
@@ -63,15 +63,15 @@ namespace FocusSports
         }
 
         // Ver os Clientes na DataGridView
-        private void MostraClientes()
-        {
-            conn.Open();
-            DataTable dt = new DataTable();
-            adapt = new SqlDataAdapter("select * from dbo.Clientes", conn);
-            adapt.Fill(dt);
-            dataGridView1.DataSource = dt;
-            conn.Close();
-        }
+        //private void MostraClientes()
+        //{
+        //    conn.Open();
+        //    DataTable dt = new DataTable();
+        //    adapt = new SqlDataAdapter("select * from dbo.Clientes", conn);
+        //    adapt.Fill(dt);
+        //    dataGridView1.DataSource = dt;
+        //    conn.Close();
+        //}
 
 
         private void NovoUtilizador(string tipoUser)
@@ -79,7 +79,7 @@ namespace FocusSports
             if(tipoUser == "Cliente")
             {
 
-                //cmd = new SqlCommand("Insert Into tbl_Record(Name,State) values(@name,@state)", conn);
+                //cmd = new SqlCommand("Insert Into tbl_Clientes(Name,State) values(@name,@state)", conn);
                 //conn.Open();
                 //cmd.Parameters.AddWithValue("@name", txt_Utilizador.Text);
                 //cmd.Parameters.AddWithValue("@state", txt_Nome.Text);
@@ -88,7 +88,7 @@ namespace FocusSports
                 //cmd.ExecuteNonQuery();
                 //conn.Close();
                 //MessageBox.Show("Utilizador registado com sucesso!");
-                MostraClientes();
+         
             }
             else
             {
@@ -141,7 +141,7 @@ namespace FocusSports
 
         }
 
-        //Muda as Labels para Utilizadores e limpa os campos
+        //Muda as Labels para registar Utilizadores em vez de Clientes e limpa os campos
         private void MudarLabels()
         {
             label1.Text = "Utilizador";
@@ -166,6 +166,7 @@ namespace FocusSports
             label7.Visible = false;
             label8.Visible = false;
             label9.Visible = false;
+            dataGridView1.Visible = true;
             MostraUtilizadores();
 
         }
@@ -204,7 +205,7 @@ namespace FocusSports
             txt_Pass.PasswordChar = '\0';
             labelregistar.Text = "Registar Cliente";
             checkBox1.Visible = false;
-            MostraClientes();
+            dataGridView1.Visible = false;
         }
 
         private void btnUti_Click(object sender, EventArgs e)

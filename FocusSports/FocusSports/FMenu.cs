@@ -23,13 +23,14 @@ namespace FocusSports
     public partial class FMenu : Form
     {
         string permi;
+
         public void Permissoes(string permissoes)
         {
             permi = permissoes;
           
             if (permissoes != "Administrador")
             {
-                registarToolStripMenuItem.Visible = false;
+               
             }
            
         }
@@ -73,6 +74,7 @@ namespace FocusSports
             return false;
         }
 
+        //Verifica se existe algum form aberto dentro da janela principal e fecha se houver
         private void FecharForms()
         {
             if (this.MdiChildren.Length > 0) 
@@ -85,14 +87,16 @@ namespace FocusSports
             }
         }
        
+        //Clicar no botao para abrir a janela Produtos
         private void produtosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (FormAberto("Produtos") != true)
             {
                 FecharForms();
-                Form janela_Produtos = new Produtos();
+                Produtos janela_Produtos = new Produtos();
                 janela_Produtos.MdiParent = this;
                 tableLayoutCentro.Visible = false;
+                janela_Produtos.Permissoes(permi);
                 janela_Produtos.Show();
                 janela_Produtos.WindowState = FormWindowState.Maximized;
 
@@ -100,21 +104,8 @@ namespace FocusSports
             
         }
 
-        private void registarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (FormAberto("Registar") != true)
-            {
-                FecharForms();
-                Registar janela_Registar = new Registar();
-                janela_Registar.MdiParent = this;
-                tableLayoutCentro.Visible = false;
-                janela_Registar.Permissoes(permi);
-                janela_Registar.Show();
-                janela_Registar.WindowState = FormWindowState.Maximized;
-
-            }
-        }
-
+        
+        //Mostrar caixa de dialogo ao clicar na cruz vermelha para fechar a janela
         private void FMenu_FormClosing(object sender, FormClosingEventArgs e)
         {
             DialogResult resposta = MessageBox.Show("Tem a certeza que quer sair?", "Encerrar aplicação!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -123,12 +114,9 @@ namespace FocusSports
             {
                 e.Cancel = true;
             }
-            else
-            {
-                Application.Exit();
-            }
-                
         }
+            
+                
 
         private void registarClienteToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -144,6 +132,29 @@ namespace FocusSports
                 
 
             }
+        }
+
+        private void menuToolStripMenuItem_MouseHover(object sender, EventArgs e)
+        {
+      
+        }
+
+        private void menuToolStripMenuItem_MouseDown(object sender, MouseEventArgs e)
+        {
+           
+        }
+
+        private void menuToolStripMenuItem_MouseLeave(object sender, EventArgs e)
+        {
+          
+        }
+
+        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form_Login form = new Form_Login();
+            form.ShowDialog();
+            this.Close();
         }
     }
 }
