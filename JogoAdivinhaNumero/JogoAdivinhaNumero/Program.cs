@@ -25,7 +25,7 @@ namespace JogoAdivinhaNumero
 
             for (int i = 1; i <= 10; i++)
             {
-                Console.Write("\nAdvinhe o numero (1-100): ");
+                Console.Write("\nAdvinhe o numero de 1 a 100 (" + (11-i) +" Tentativa(s)): ");
 
                 numIntroduzido = int.Parse(Console.ReadLine());
 
