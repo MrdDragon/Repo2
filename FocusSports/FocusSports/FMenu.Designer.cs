@@ -30,11 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FMenu));
             this.tableLayoutBaixo = new System.Windows.Forms.TableLayoutPanel();
-            this.linkLabelStock = new System.Windows.Forms.LinkLabel();
             this.labelSelecao = new System.Windows.Forms.Label();
             this.flowLayoutCima = new System.Windows.Forms.FlowLayoutPanel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip3 = new System.Windows.Forms.MenuStrip();
             this.produtosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,7 +44,7 @@
             this.opçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutCentro = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblAviso = new System.Windows.Forms.Label();
             this.tableLayoutBaixo.SuspendLayout();
             this.flowLayoutCima.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -61,10 +61,10 @@
             this.tableLayoutBaixo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutBaixo.BackColor = System.Drawing.Color.White;
             this.tableLayoutBaixo.ColumnCount = 2;
-            this.tableLayoutBaixo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 38.93238F));
-            this.tableLayoutBaixo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 61.06762F));
-            this.tableLayoutBaixo.Controls.Add(this.linkLabelStock, 0, 0);
+            this.tableLayoutBaixo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.23843F));
+            this.tableLayoutBaixo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.76157F));
             this.tableLayoutBaixo.Controls.Add(this.labelSelecao, 1, 0);
+            this.tableLayoutBaixo.Controls.Add(this.lblAviso, 0, 0);
             this.tableLayoutBaixo.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutBaixo.Location = new System.Drawing.Point(0, 817);
             this.tableLayoutBaixo.Name = "tableLayoutBaixo";
@@ -73,25 +73,11 @@
             this.tableLayoutBaixo.Size = new System.Drawing.Size(1405, 35);
             this.tableLayoutBaixo.TabIndex = 0;
             // 
-            // linkLabelStock
-            // 
-            this.linkLabelStock.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.linkLabelStock.AutoSize = true;
-            this.linkLabelStock.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabelStock.LinkColor = System.Drawing.Color.Red;
-            this.linkLabelStock.Location = new System.Drawing.Point(3, 8);
-            this.linkLabelStock.Name = "linkLabelStock";
-            this.linkLabelStock.Size = new System.Drawing.Size(147, 18);
-            this.linkLabelStock.TabIndex = 0;
-            this.linkLabelStock.TabStop = true;
-            this.linkLabelStock.Text = "Aviso de stock baixo!";
-            this.linkLabelStock.Visible = false;
-            // 
             // labelSelecao
             // 
             this.labelSelecao.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelSelecao.AutoSize = true;
-            this.labelSelecao.Location = new System.Drawing.Point(549, 9);
+            this.labelSelecao.Location = new System.Drawing.Point(750, 9);
             this.labelSelecao.Name = "labelSelecao";
             this.labelSelecao.Size = new System.Drawing.Size(84, 16);
             this.labelSelecao.TabIndex = 1;
@@ -124,7 +110,7 @@
             this.menuToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(226, 31);
+            this.menuStrip1.Size = new System.Drawing.Size(76, 31);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -139,11 +125,18 @@
             this.menuToolStripMenuItem.Size = new System.Drawing.Size(68, 27);
             this.menuToolStripMenuItem.Text = "Menu";
             // 
+            // logoutToolStripMenuItem
+            // 
+            this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(148, 28);
+            this.logoutToolStripMenuItem.Text = "Logout";
+            this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
+            // 
             // sairToolStripMenuItem
             // 
             this.sairToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
             this.sairToolStripMenuItem.Name = "sairToolStripMenuItem";
-            this.sairToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
+            this.sairToolStripMenuItem.Size = new System.Drawing.Size(148, 28);
             this.sairToolStripMenuItem.Text = "Sair";
             this.sairToolStripMenuItem.Click += new System.EventHandler(this.sairToolStripMenuItem_Click);
             // 
@@ -154,7 +147,7 @@
             this.menuStrip3.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.produtosToolStripMenuItem});
-            this.menuStrip3.Location = new System.Drawing.Point(226, 0);
+            this.menuStrip3.Location = new System.Drawing.Point(76, 0);
             this.menuStrip3.Name = "menuStrip3";
             this.menuStrip3.Size = new System.Drawing.Size(101, 31);
             this.menuStrip3.TabIndex = 5;
@@ -176,7 +169,7 @@
             this.menuStrip4.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.registarClienteToolStripMenuItem});
-            this.menuStrip4.Location = new System.Drawing.Point(327, 0);
+            this.menuStrip4.Location = new System.Drawing.Point(177, 0);
             this.menuStrip4.Name = "menuStrip4";
             this.menuStrip4.Size = new System.Drawing.Size(94, 28);
             this.menuStrip4.TabIndex = 6;
@@ -196,7 +189,7 @@
             this.menuStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.opçõesToolStripMenuItem});
-            this.menuStrip2.Location = new System.Drawing.Point(421, 0);
+            this.menuStrip2.Location = new System.Drawing.Point(271, 0);
             this.menuStrip2.Name = "menuStrip2";
             this.menuStrip2.Size = new System.Drawing.Size(89, 31);
             this.menuStrip2.TabIndex = 4;
@@ -237,12 +230,18 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // logoutToolStripMenuItem
+            // lblAviso
             // 
-            this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
-            this.logoutToolStripMenuItem.Text = "Logout";
-            this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
+            this.lblAviso.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblAviso.AutoSize = true;
+            this.lblAviso.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAviso.ForeColor = System.Drawing.Color.Red;
+            this.lblAviso.Location = new System.Drawing.Point(3, 5);
+            this.lblAviso.Name = "lblAviso";
+            this.lblAviso.Size = new System.Drawing.Size(67, 25);
+            this.lblAviso.TabIndex = 2;
+            this.lblAviso.Text = "Aviso!";
+            this.lblAviso.Visible = false;
             // 
             // FMenu
             // 
@@ -290,12 +289,12 @@
         private System.Windows.Forms.ToolStripMenuItem opçõesToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip3;
         private System.Windows.Forms.ToolStripMenuItem produtosToolStripMenuItem;
-        private System.Windows.Forms.LinkLabel linkLabelStock;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutCentro;
         private System.Windows.Forms.Label labelSelecao;
         private System.Windows.Forms.MenuStrip menuStrip4;
         private System.Windows.Forms.ToolStripMenuItem registarClienteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem logoutToolStripMenuItem;
+        private System.Windows.Forms.Label lblAviso;
     }
 }

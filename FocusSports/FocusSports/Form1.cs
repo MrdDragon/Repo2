@@ -47,6 +47,7 @@ namespace FocusSports
         //Metodo para ativar ou desativar o botão se não tiver dados introduzidos
         private void VerificaTexto()
         {
+            
             if (string.IsNullOrEmpty(txt_Nome.Text) || string.IsNullOrEmpty(txt_Pass.Text))
             {
                 button_Sub.Enabled = false;

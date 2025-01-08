@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -23,20 +24,87 @@ namespace FocusSports
     public partial class FMenu : Form
     {
         string permi;
+        string conString = Connecao.GetConString();
+        SqlConnection conn;
+        SqlCommand cmd;
+        SqlDataAdapter adapt;
+        
 
         public void Permissoes(string permissoes)
         {
             permi = permissoes;
-          
-            if (permissoes != "Administrador")
+
+            if(permissoes != "Vendas")
             {
-               
+                VerificaVS();
             }
-           
+          
         }
         public FMenu()
         {
+            conn = new SqlConnection(conString);
             InitializeComponent();
+            
+        }
+
+        //Metodo para ver as validades e stocks
+        public void VerificaVS()
+        {
+            DateTime dateTime = DateTime.Now.Date.AddMonths(20);
+            
+            conn.Open();
+            DataTable dt = new DataTable();
+            adapt = new SqlDataAdapter("select * from dbo.Produtos", conn);
+            adapt.Fill(dt);
+            DateTime validade;
+            int contaValidade = 0, contaStock = 0;
+
+            for (int i = 1; i < dt.Rows.Count; i++)
+            {
+                DataRow dr = dt.Rows[i];
+
+                if (dr["Aviso"].ToString() == "Sim")
+                {
+                    validade = Convert.ToDateTime(dr["Validade"]);
+
+                    if (validade <= dateTime)
+                    {
+                        contaValidade++;
+                    }
+
+                    if (Convert.ToInt32(dr["Quantidade"]) <= 100)
+                    {
+                        contaStock++;
+                    }
+                }
+                
+            } 
+            conn.Close();
+
+            if (contaStock > 0 && contaValidade == 0)
+            {
+                lblAviso.Text = "Atenção existe " + contaStock + " Produto(s) com Stock baixo!";
+                lblAviso.Visible = true;
+            }
+            else if (contaValidade > 0 && contaStock == 0)
+            {
+                lblAviso.Text = "Atenção existe " + contaValidade + " Produto(s) com Validade baixa!";
+                lblAviso.Visible = true;
+            }
+            else if (contaValidade > 0 && contaStock > 0)
+            {
+                lblAviso.Text = "Atenção existem " + contaValidade + " Produto(s) com Validade baixa e " + contaStock + " Produto(s) com Stock baixo!";
+                lblAviso.Visible = true;
+            }
+        }
+
+
+        //Muda a label em baixo para o produto seletionado
+        public void Seleccao(string produto)
+        {
+                labelSelecao.Visible = true;
+                labelSelecao.Text = produto;
+            
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -57,7 +125,6 @@ namespace FocusSports
             {
                 Application.Exit();
             }
-            
         }
 
         // Verifica se algum formulário filho com o título especificado está aberto
@@ -83,7 +150,6 @@ namespace FocusSports
                 { 
                     f.Close();
                 }
-                
             }
         }
        
@@ -99,6 +165,7 @@ namespace FocusSports
                 janela_Produtos.Permissoes(permi);
                 janela_Produtos.Show();
                 janela_Produtos.WindowState = FormWindowState.Maximized;
+                janela_Produtos.MostraTodosProdutos();
 
             }
             
@@ -129,8 +196,7 @@ namespace FocusSports
                 janela_Registar.Permissoes(permi);
                 janela_Registar.Show();
                 janela_Registar.WindowState = FormWindowState.Maximized;
-                
-
+                labelSelecao.Visible = false;
             }
         }
 
@@ -149,6 +215,7 @@ namespace FocusSports
           
         }
 
+        //Botao Logout
         private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Hide();

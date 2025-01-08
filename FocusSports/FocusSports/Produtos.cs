@@ -58,11 +58,37 @@ namespace FocusSports
 
         public void MostraTodosProdutos()
         {
+            DateTime dateTime = DateTime.Now.AddMonths(20);
+
             conn.Open();
             DataTable dt = new DataTable();
             adapt = new SqlDataAdapter("select * from dbo.Produtos", conn);
             adapt.Fill(dt);
             dataGridProdutos.DataSource = dt;
+            
+            DateTime validade;
+
+            for (int i = 1; i < dt.Rows.Count; i++)
+            {
+                DataRow dr = dt.Rows[i];
+
+                if (dr["Aviso"].ToString() == "Sim")
+                {
+                    validade = Convert.ToDateTime(dr["Validade"]);
+
+                    if (validade <= dateTime)
+                    {
+                        dataGridProdutos.Rows[i].DefaultCellStyle.BackColor = Color.DarkRed; // Cor de fundo
+                        dataGridProdutos.Rows[i].DefaultCellStyle.ForeColor = Color.White; // Cor do texto
+                    }
+
+                    if (Convert.ToInt32(dr["Quantidade"]) <= 100)
+                    {
+                        dataGridProdutos.Rows[i].DefaultCellStyle.BackColor = Color.DarkRed; // Cor de fundo
+                        dataGridProdutos.Rows[i].DefaultCellStyle.ForeColor = Color.White; // Cor do texto
+                    }
+                }
+            }
             conn.Close();
         }
 
@@ -130,9 +156,19 @@ namespace FocusSports
             {
                 id = Convert.ToInt32(dataGridProdutos.Rows[e.RowIndex].Cells[0].Value.ToString());
                 pictureBoxPreview.ImageLocation = dataGridProdutos.Rows[e.RowIndex].Cells[9].Value.ToString();
-                btnEditar.Enabled = true;
-                btnApagar.Enabled = true;
+                txtDesc.Text = dataGridProdutos.Rows[e.RowIndex].Cells[8].Value.ToString();
+
+                
+                if (this.MdiParent is FMenu fmenu)
+                {
+                    fmenu.Seleccao(dataGridProdutos.Rows[e.RowIndex].Cells[1].Value.ToString());
+                }
+                
             }
+        }
+
+        private void dataGridProdutos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
         }
     }

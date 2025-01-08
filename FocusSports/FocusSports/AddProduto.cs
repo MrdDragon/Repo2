@@ -20,6 +20,7 @@ namespace FocusSports
 
         public AddProduto()
         {
+            conn = new SqlConnection(conString);
             InitializeComponent();
         }
 
@@ -160,13 +161,12 @@ namespace FocusSports
                 }
                 else
                 {
-                    conn = new SqlConnection(conString);
-                    cmd = new SqlCommand("Insert Into dbo.Produtos(NomeProduto,Tamanho,PrecoVendaProduto,PrecoCompraProduto,Quantidade,TipoProduto,Validade,Nota,CaminhoImg,Aviso) VALUES(@nomeProduto,@tamanho,@precoVendaProduto,@precoCompraProduto,@quantidade,@tipoProduto,@validade,@nota,@caminhoImg,@aviso)", conn);
+                    cmd = new SqlCommand("Insert Into dbo.Produtos(NomeProduto,Tamanho,PrecoVenda,PrecoCompra,Quantidade,TipoProduto,Validade,Nota,CaminhoImg,Aviso) VALUES(@nomeProduto,@tamanho,@precoVenda,@precoCompra,@quantidade,@tipoProduto,@validade,@nota,@caminhoImg,@aviso)", conn);
                     conn.Open();
                     cmd.Parameters.AddWithValue("@nomeProduto", txtNome.Text);
                     cmd.Parameters.AddWithValue("@tamanho", txtTamanho.Text);
-                    cmd.Parameters.AddWithValue("@precoVendaProduto", txtPrecoV.Text);
-                    cmd.Parameters.AddWithValue("@precoCompraProduto", txtPrecoC.Text);
+                    cmd.Parameters.AddWithValue("@precoVenda", txtPrecoV.Text);
+                    cmd.Parameters.AddWithValue("@precoCompra", txtPrecoC.Text);
                     cmd.Parameters.AddWithValue("@quantidade", txtQuantidade.Text);
                     cmd.Parameters.AddWithValue("@tipoProduto", comboBox1.SelectedItem.ToString());
                     cmd.Parameters.AddWithValue("@validade", dateTimePicker1.Value);
