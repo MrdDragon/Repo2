@@ -80,6 +80,7 @@
             this.txt_Nome.Name = "txt_Nome";
             this.txt_Nome.Size = new System.Drawing.Size(247, 24);
             this.txt_Nome.TabIndex = 1;
+            this.txt_Nome.Tag = "";
             this.txt_Nome.TextChanged += new System.EventHandler(this.txt_Nome_TextChanged);
             this.txt_Nome.Enter += new System.EventHandler(this.txt_Nome_Enter);
             this.txt_Nome.Leave += new System.EventHandler(this.txt_Nome_Leave);

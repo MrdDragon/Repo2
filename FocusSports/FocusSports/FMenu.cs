@@ -50,7 +50,7 @@ namespace FocusSports
         //Metodo para ver as validades e stocks
         public void VerificaVS()
         {
-            DateTime dateTime = DateTime.Now.Date.AddMonths(20);
+            DateTime dateTime = DateTime.Now.Date.AddMonths(2);
             
             conn.Open();
             DataTable dt = new DataTable();
@@ -59,7 +59,7 @@ namespace FocusSports
             DateTime validade;
             int contaValidade = 0, contaStock = 0;
 
-            for (int i = 1; i < dt.Rows.Count; i++)
+            for (int i = 0; i < dt.Rows.Count; i++)
             {
                 DataRow dr = dt.Rows[i];
 
@@ -72,7 +72,7 @@ namespace FocusSports
                         contaValidade++;
                     }
 
-                    if (Convert.ToInt32(dr["Quantidade"]) <= 100)
+                    if (Convert.ToInt32(dr["Quantidade"]) < 200)
                     {
                         contaStock++;
                     }
@@ -151,6 +151,7 @@ namespace FocusSports
                     f.Close();
                 }
             }
+
         }
        
         //Clicar no botao para abrir a janela Produtos
@@ -222,6 +223,21 @@ namespace FocusSports
             Form_Login form = new Form_Login();
             form.ShowDialog();
             this.Close();
+        }
+
+        private void clientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (FormAberto("Clientes") != true)
+            {
+                FecharForms();
+                Clientes janela_clientes = new Clientes();
+                janela_clientes.MdiParent = this;
+                tableLayoutCentro.Visible = false;
+                //janela_clientes.Permissoes(permi);
+                janela_clientes.Show();
+                janela_clientes.WindowState = FormWindowState.Maximized;
+                labelSelecao.Visible = false;
+            }
         }
     }
 }

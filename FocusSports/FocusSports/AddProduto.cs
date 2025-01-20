@@ -17,6 +17,9 @@ namespace FocusSports
         string conString = Connecao.GetConString();
         SqlConnection conn;
         SqlCommand cmd;
+        SqlDataAdapter adapt;
+        bool editar = false;
+        int proId = 0;
 
         public AddProduto()
         {
@@ -24,6 +27,35 @@ namespace FocusSports
             InitializeComponent();
         }
 
+        public void EditarProduto(int id)
+        {
+            proId = id;
+            editar = true;
+            conn.Open();
+            cmd = new SqlCommand("select * from dbo.Produtos WHERE ProdutoID = @produtoId", conn);
+            cmd.Parameters.AddWithValue("@produtoId", id);
+            adapt = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            adapt.Fill(dt);
+
+            if (dt.Rows.Count > 0)
+            {
+                DataRow dr = dt.Rows[0];
+                txtNome.Text = Convert.ToString(dr["NomeProduto"]);
+                txtTamanho.Text = Convert.ToString(dr["Tamanho"]);
+                txtQuantidade.Text = Convert.ToDouble(dr["Quantidade"]).ToString();
+                comboBox1.SelectedItem = Convert.ToString(dr["TipoProduto"]);
+                dateTimePicker1.Value = Convert.ToDateTime(dr["Validade"]);
+                txtNota.Text = Convert.ToString(dr["Nota"]);
+                txtCaminhoImagem.Text = Convert.ToString(dr["CaminhoImg"]);
+                txtPrecoV.Text = Convert.ToDouble(dr["PrecoVenda"]).ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+                txtPrecoC.Text = Convert.ToDouble(dr["PrecoCompra"]).ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+                pictureBox1.ImageLocation = Convert.ToString(dr["CaminhoImg"]);
+                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            }
+            
+            conn.Close();
+        }
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -74,7 +106,7 @@ namespace FocusSports
 
         private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Verificar se o caractere pressionado é um número
+            // Verificar se o caractere pressionado é não é um número ou . ou teclas de controle
             if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != '.')
             {
                 // Cancelar a entrada se não for um número, tecla de controle ou ponto
@@ -149,41 +181,73 @@ namespace FocusSports
             //Verificar se estão preenchidos os campos
             if(txtNome.Text == "" || txtQuantidade.Text == "" || txtPrecoC.Text == "" || txtPrecoV.Text == "" || txtTamanho.Text == "" || comboBox1.SelectedItem == null)
             {
-                MessageBox.Show("Por favor preencha todos os campos obrigatórios.", "Atenção!");
+                MessageBox.Show("Por favor preencha todos os campos obrigatórios.", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (string.IsNullOrEmpty(txtNome.Text)) lblaviso1.Visible = true;
+                if (string.IsNullOrEmpty(txtTamanho.Text)) lblaviso2.Visible = true;
+                if (string.IsNullOrEmpty(txtQuantidade.Text)) lblaviso3.Visible = true;
+                if (string.IsNullOrEmpty(comboBox1.Text)) lblaviso4.Visible = true;
+                if (string.IsNullOrEmpty(txtPrecoC.Text)) lblaviso5.Visible = true;
+                if (string.IsNullOrEmpty(txtPrecoV.Text)) lblaviso6.Visible = true;
             }
             else
             {
                 //Verifica se é suplemento e está dentro da validade
                 if (comboBox1.SelectedItem.ToString() == "Suplemento" && dateTimePicker1.Value < DateTime.Today.Date)
                 {
-                    MessageBox.Show("Produto fora da validade!", "Atenção");
-                    
+                    MessageBox.Show("Produto fora da validade!", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    dateTimePicker1.Focus();
                 }
                 else
                 {
-                    cmd = new SqlCommand("Insert Into dbo.Produtos(NomeProduto,Tamanho,PrecoVenda,PrecoCompra,Quantidade,TipoProduto,Validade,Nota,CaminhoImg,Aviso) VALUES(@nomeProduto,@tamanho,@precoVenda,@precoCompra,@quantidade,@tipoProduto,@validade,@nota,@caminhoImg,@aviso)", conn);
-                    conn.Open();
-                    cmd.Parameters.AddWithValue("@nomeProduto", txtNome.Text);
-                    cmd.Parameters.AddWithValue("@tamanho", txtTamanho.Text);
-                    cmd.Parameters.AddWithValue("@precoVenda", txtPrecoV.Text);
-                    cmd.Parameters.AddWithValue("@precoCompra", txtPrecoC.Text);
-                    cmd.Parameters.AddWithValue("@quantidade", txtQuantidade.Text);
-                    cmd.Parameters.AddWithValue("@tipoProduto", comboBox1.SelectedItem.ToString());
-                    cmd.Parameters.AddWithValue("@validade", dateTimePicker1.Value);
-                    cmd.Parameters.AddWithValue("@nota", txtNota.Text);
-                    cmd.Parameters.AddWithValue("@caminhoImg", txtCaminhoImagem.Text);
-                    cmd.Parameters.AddWithValue("@aviso", "Sim");
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                    MessageBox.Show("Produto registado com sucesso!");
-                    this.Close();
+                    if(editar == true)
+                    {
+                        cmd = new SqlCommand("UPDATE dbo.Produtos set NomeProduto = @nomeProduto, Tamanho = @tamanho, PrecoVenda = @precoVenda, PrecoCompra = @precoCompra, Quantidade = @quantidade, TipoProduto = @tipoProduto, Validade = @validade, Nota = @nota, CaminhoImg = @caminhoImg Where ProdutoID = @produtoId", conn);
+                        conn.Open();
+                        cmd.Parameters.AddWithValue("@nomeProduto", txtNome.Text);
+                        cmd.Parameters.AddWithValue("@tamanho", txtTamanho.Text);
+                        cmd.Parameters.AddWithValue("@precoVenda", txtPrecoV.Text);
+                        cmd.Parameters.AddWithValue("@precoCompra", txtPrecoC.Text);
+                        cmd.Parameters.AddWithValue("@quantidade", txtQuantidade.Text);
+                        cmd.Parameters.AddWithValue("@tipoProduto", comboBox1.SelectedItem.ToString());
+                        cmd.Parameters.AddWithValue("@validade", dateTimePicker1.Value);
+                        cmd.Parameters.AddWithValue("@nota", txtNota.Text);
+                        cmd.Parameters.AddWithValue("@caminhoImg", txtCaminhoImagem.Text);
+                        cmd.Parameters.AddWithValue("@produtoId", proId);
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                        MessageBox.Show("Produto atualizado com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                    else
+                    {
+                        cmd = new SqlCommand("Insert Into dbo.Produtos(NomeProduto,Tamanho,PrecoVenda,PrecoCompra,Quantidade,TipoProduto,Validade,Nota,CaminhoImg,Aviso) VALUES(@nomeProduto,@tamanho,@precoVenda,@precoCompra,@quantidade,@tipoProduto,@validade,@nota,@caminhoImg,@aviso)", conn);
+                        conn.Open();
+                        cmd.Parameters.AddWithValue("@nomeProduto", txtNome.Text);
+                        cmd.Parameters.AddWithValue("@tamanho", txtTamanho.Text);
+                        cmd.Parameters.AddWithValue("@precoVenda", txtPrecoV.Text);
+                        cmd.Parameters.AddWithValue("@precoCompra", txtPrecoC.Text);
+                        cmd.Parameters.AddWithValue("@quantidade", txtQuantidade.Text);
+                        cmd.Parameters.AddWithValue("@tipoProduto", comboBox1.SelectedItem.ToString());
+                        cmd.Parameters.AddWithValue("@validade", dateTimePicker1.Value);
+                        cmd.Parameters.AddWithValue("@nota", txtNota.Text);
+                        cmd.Parameters.AddWithValue("@caminhoImg", txtCaminhoImagem.Text);
+                        cmd.Parameters.AddWithValue("@aviso", "Sim");
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                        MessageBox.Show("Produto registado com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
                 }
-                
             }
 
         }
 
         private void txtQuantidade_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
         }

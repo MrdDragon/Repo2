@@ -28,8 +28,7 @@ namespace FocusSports
         SqlConnection conn;
         SqlCommand cmd;
         SqlDataAdapter adapt;
-
-        int id = 0;
+        int id;
 
         public void Permissoes(string permissoes)
         {
@@ -58,7 +57,8 @@ namespace FocusSports
 
         public void MostraTodosProdutos()
         {
-            DateTime dateTime = DateTime.Now.AddMonths(20);
+            //Adicionamos os meses (dentro dos parenteses) à data actual para comparar se as validades ja la chegaram!
+            DateTime dateTime = DateTime.Now.AddMonths(2);
 
             conn.Open();
             DataTable dt = new DataTable();
@@ -68,7 +68,7 @@ namespace FocusSports
             
             DateTime validade;
 
-            for (int i = 1; i < dt.Rows.Count; i++)
+            for (int i = 0; i < dt.Rows.Count; i++)
             {
                 DataRow dr = dt.Rows[i];
 
@@ -82,7 +82,7 @@ namespace FocusSports
                         dataGridProdutos.Rows[i].DefaultCellStyle.ForeColor = Color.White; // Cor do texto
                     }
 
-                    if (Convert.ToInt32(dr["Quantidade"]) <= 100)
+                    if (Convert.ToInt32(dr["Quantidade"]) < 200) //A quantidade que queremos o aviso de stocks
                     {
                         dataGridProdutos.Rows[i].DefaultCellStyle.BackColor = Color.DarkRed; // Cor de fundo
                         dataGridProdutos.Rows[i].DefaultCellStyle.ForeColor = Color.White; // Cor do texto
@@ -146,7 +146,8 @@ namespace FocusSports
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            AddProduto addProduto = new AddProduto();
+            AddProduto addProduto = new AddProduto(); 
+            addProduto.Text = "Registar Produto";
             addProduto.ShowDialog();
         }
 
@@ -170,6 +171,96 @@ namespace FocusSports
         private void dataGridProdutos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btnApagar_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Tem certeza que deseja apagar este registo?", "Confirmação de Exclusão", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                cmd = new SqlCommand("DELETE FROM dbo.Produtos WHERE ProdutoID = @produtoid", conn);
+                conn.Open();
+                cmd.Parameters.AddWithValue("@produtoid", id);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                MessageBox.Show("Registo apagado com sucesso!");
+                MostraTodosProdutos();
+            }
+        }
+
+        //Pesquisar por Id
+        private void btnId_Click(object sender, EventArgs e)
+        {
+            txtNome.Text = "";
+            if (txtId.Text != "")
+            {
+                try
+                {
+                    conn.Open();
+                    DataTable dt = new DataTable();
+                    adapt = new SqlDataAdapter("select * from dbo.Produtos WHERE ProdutoID LIKE '%" + txtId.Text + "%'", conn);
+                    adapt.Fill(dt);
+                    dataGridProdutos.DataSource = dt;
+                    conn.Close();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Erro na pesquisa!", "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MostraTodosProdutos();
+            }
+        }
+
+        private void btnNome_Click(object sender, EventArgs e)
+        {
+            txtId.Text = "";
+            if (txtNome.Text != "")
+            {
+                try
+                {
+                    conn.Open();
+                    DataTable dt = new DataTable();
+                    adapt = new SqlDataAdapter("select * from dbo.Produtos WHERE NomeProduto LIKE '%" + txtNome.Text + "%'", conn);
+                    adapt.Fill(dt);
+                    dataGridProdutos.DataSource = dt;
+                    conn.Close();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Erro na pesquisa!", "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MostraTodosProdutos();
+            }
+        }
+
+        private void txtId_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnId.PerformClick();
+            }
+        }
+
+        private void txtNome_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnNome.PerformClick();
+            }
+        }
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            AddProduto addProduto = new AddProduto();
+            addProduto.Text = "Editar Produto";
+            addProduto.EditarProduto(id);
+            addProduto.ShowDialog();
         }
     }
 }

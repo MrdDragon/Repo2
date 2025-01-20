@@ -39,8 +39,6 @@ namespace FocusSports
                 btnAdmin.Visible = false;
                 btnStocks.Visible = false;
                 btnCliente.Visible = false;
-                dataGridView1.Visible = false;
-                btnCliente_Click(btnCliente, EventArgs.Empty); //Executa o evento Click do botão Cliente
             }
         }
 
@@ -56,39 +54,64 @@ namespace FocusSports
         {
             conn.Open();
             DataTable dt = new DataTable();
-            adapt = new SqlDataAdapter("select * from dbo.Utilizadores", conn);
+            adapt = new SqlDataAdapter("select Utilizador, Nome, Email, Permissoes from dbo.Utilizadores", conn);
             adapt.Fill(dt);
             dataGridView1.DataSource = dt;
             conn.Close();
         }
 
-        // Ver os Clientes na DataGridView
-        //private void MostraClientes()
-        //{
-        //    conn.Open();
-        //    DataTable dt = new DataTable();
-        //    adapt = new SqlDataAdapter("select * from dbo.Clientes", conn);
-        //    adapt.Fill(dt);
-        //    dataGridView1.DataSource = dt;
-        //    conn.Close();
-        //}
+        // Verifica se ja existem o utilizador e email
+        private void VerificaUtilizador(string utilizador, string email)
+        {
+            conn.Open();
+            DataTable dt = new DataTable();
+            adapt = new SqlDataAdapter("select Utilizador from dbo.Utilizadores WHERE Utilizador = '" + utilizador + "'", conn);
+            adapt.Fill(dt);
 
+            if (dt.Rows.Count == 1)
+            {
+                MessageBox.Show("Utilizador já existente!", "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txt_Utilizador.Focus();
+            }
+            else
+            {
+                adapt = new SqlDataAdapter("select Email from dbo.Utilizadores WHERE EMAIL = '" + email + "'", conn);
+                DataTable dt2 = new DataTable();
+                adapt.Fill(dt2);
+
+                if (dt2.Rows.Count == 1)
+                {
+                    MessageBox.Show("Email já existente!", "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txt_Email.Focus();
+                }
+                else
+                {
+                    NovoUtilizador(typuser);
+                }
+
+            }
+            conn.Close();
+        }
 
         private void NovoUtilizador(string tipoUser)
         {
             if(tipoUser == "Cliente")
             {
 
-                //cmd = new SqlCommand("Insert Into tbl_Clientes(Name,State) values(@name,@state)", conn);
-                //conn.Open();
-                //cmd.Parameters.AddWithValue("@name", txt_Utilizador.Text);
-                //cmd.Parameters.AddWithValue("@state", txt_Nome.Text);
-                //cmd.Parameters.AddWithValue("@name", txt_Email.Text);
-                //cmd.Parameters.AddWithValue("@state", txt_Pass.Text);
-                //cmd.ExecuteNonQuery();
-                //conn.Close();
-                //MessageBox.Show("Utilizador registado com sucesso!");
-         
+                cmd = new SqlCommand("Insert Into dbo.Clientes(NomeCliente,Telefone,Morada,Distrito,Pais,EmailCliente,CodigoPostal,Nota) values(@nomecliente, @telefone, @morada, @distrito, @pais, @emailcliente, @codigopostal, @nota)", conn);
+                conn.Open();
+                cmd.Parameters.AddWithValue("@nomecliente", txt_Nome.Text);
+                cmd.Parameters.AddWithValue("@telefone", txt_Tele.Text);
+                cmd.Parameters.AddWithValue("@morada", txt_Utilizador.Text);
+                cmd.Parameters.AddWithValue("@distrito", txt_Dist.Text);
+                cmd.Parameters.AddWithValue("@pais", txt_Pais.Text);
+                cmd.Parameters.AddWithValue("@emailcliente", txt_Email.Text);
+                cmd.Parameters.AddWithValue("@codigopostal", txt_Pass.Text);
+                cmd.Parameters.AddWithValue("@nota", txt_Nota.Text);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                MessageBox.Show("Cliente registado com sucesso!");
+                LimparCampos();
             }
             else
             {
@@ -119,7 +142,7 @@ namespace FocusSports
             {
                 if (txt_Utilizador.Text != "" && txt_Pass.Text != "" && txt_Email.Text != "" && txt_Nome.Text != "")
                 {
-                    NovoUtilizador(typuser);
+                    VerificaUtilizador(txt_Utilizador.Text, txt_Email.Text);
                 }
                 else
                 {
@@ -144,31 +167,35 @@ namespace FocusSports
         //Muda as Labels para registar Utilizadores em vez de Clientes e limpa os campos
         private void MudarLabels()
         {
+            LimparCampos();
             label1.Text = "Utilizador";
             label3.Text = "Palavra-passe";
             txt_Pass.PasswordChar = '*';
             checkBox1.Visible = true;
             labeldesc.Visible = true;
             txt_Pass.Size = new Size(265, 27);
-            txt_Pass.Text = "";
-            txt_Utilizador.Text = "";
-            txt_Nome.Text = "";
-            txt_Email.Text = "";
             txt_Dist.Visible = false;
-            txt_Dist.Text = "";
             txt_Nota.Visible = false;
-            txt_Nota.Text = "";
             txt_Pais.Visible = false;
-            txt_Pais.Text = "";
             txt_Tele.Visible = false;
-            txt_Tele.Text = "";
             label6.Visible = false;
             label7.Visible = false;
             label8.Visible = false;
             label9.Visible = false;
             dataGridView1.Visible = true;
             MostraUtilizadores();
+        }
 
+        private void LimparCampos()
+        {
+            txt_Pass.Text = "";
+            txt_Utilizador.Text = "";
+            txt_Nome.Text = "";
+            txt_Email.Text = "";
+            txt_Dist.Text = "";
+            txt_Nota.Text = "";
+            txt_Pais.Text = "";
+            txt_Tele.Text = "";
         }
 
         private void btnStocks_Click(object sender, EventArgs e)
@@ -225,6 +252,34 @@ namespace FocusSports
             else
             {
                 txt_Pass.PasswordChar = '*';
+            }
+        }
+
+        private void txt_Email_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir apenas um astersco
+            if (e.KeyChar == '@' && txt_Email.Text.Contains("@"))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txt_Tele_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verificar se o caractere pressionado é não é um número ou + ou teclas de controle
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != '+')
+            {
+                // Cancelar a entrada se não for um número, tecla de controle ou ponto
+                e.Handled = true;
+
+                //Mensagem de aviso
+                MessageBox.Show("Por favor, insira apenas números.", "Atenção!");
+            }
+
+            // Permitir apenas um +
+            if (e.KeyChar == '+' && txt_Tele.Text.Contains("+"))
+            {
+                e.Handled = true;
             }
         }
     }

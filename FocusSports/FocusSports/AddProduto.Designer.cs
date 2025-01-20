@@ -53,6 +53,12 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.txtCaminhoImagem = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
+            this.lblaviso1 = new System.Windows.Forms.Label();
+            this.lblaviso4 = new System.Windows.Forms.Label();
+            this.lblaviso5 = new System.Windows.Forms.Label();
+            this.lblaviso6 = new System.Windows.Forms.Label();
+            this.lblaviso2 = new System.Windows.Forms.Label();
+            this.lblaviso3 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -131,34 +137,44 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 141F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 176F));
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button2, 3, 4);
-            this.tableLayoutPanel1.Controls.Add(this.button1, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.comboBox1, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.label2, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.txtNome, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.txtTamanho, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.txtNota, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.txtQuantidade, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.txtPrecoC, 3, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label5, 2, 2);
-            this.tableLayoutPanel1.Controls.Add(this.lblValidade, 2, 3);
-            this.tableLayoutPanel1.Controls.Add(this.dateTimePicker1, 3, 3);
-            this.tableLayoutPanel1.Controls.Add(this.txtPrecoV, 3, 2);
+            this.tableLayoutPanel1.Controls.Add(this.button1, 1, 7);
+            this.tableLayoutPanel1.Controls.Add(this.button2, 3, 7);
+            this.tableLayoutPanel1.Controls.Add(this.txtNota, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.dateTimePicker1, 3, 6);
+            this.tableLayoutPanel1.Controls.Add(this.lblValidade, 2, 6);
+            this.tableLayoutPanel1.Controls.Add(this.label5, 2, 4);
+            this.tableLayoutPanel1.Controls.Add(this.txtPrecoV, 3, 4);
+            this.tableLayoutPanel1.Controls.Add(this.txtQuantidade, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.txtTamanho, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.label4, 2, 2);
+            this.tableLayoutPanel1.Controls.Add(this.txtPrecoC, 3, 2);
+            this.tableLayoutPanel1.Controls.Add(this.lblaviso1, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.lblaviso4, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.lblaviso5, 3, 3);
+            this.tableLayoutPanel1.Controls.Add(this.lblaviso6, 3, 5);
+            this.tableLayoutPanel1.Controls.Add(this.lblaviso2, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.lblaviso3, 1, 5);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowCount = 8;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 72F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 88F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 59.14718F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.85282F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 37.09678F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 62.90322F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 161F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(767, 532);
             this.tableLayoutPanel1.TabIndex = 6;
+            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // comboBox1
             // 
@@ -182,7 +198,7 @@
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(19, 152);
+            this.label3.Location = new System.Drawing.Point(19, 146);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(83, 20);
             this.label3.TabIndex = 6;
@@ -192,7 +208,7 @@
             // 
             this.txtTamanho.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtTamanho.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTamanho.Location = new System.Drawing.Point(108, 142);
+            this.txtTamanho.Location = new System.Drawing.Point(108, 136);
             this.txtTamanho.MaxLength = 50;
             this.txtTamanho.Name = "txtTamanho";
             this.txtTamanho.Size = new System.Drawing.Size(145, 27);
@@ -221,9 +237,9 @@
             // 
             // txtQuantidade
             // 
-            this.txtQuantidade.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.txtQuantidade.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtQuantidade.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtQuantidade.Location = new System.Drawing.Point(108, 202);
+            this.txtQuantidade.Location = new System.Drawing.Point(108, 198);
             this.txtQuantidade.MaxLength = 15;
             this.txtQuantidade.Name = "txtQuantidade";
             this.txtQuantidade.Size = new System.Drawing.Size(145, 27);
@@ -235,7 +251,7 @@
             // 
             this.txtPrecoC.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtPrecoC.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPrecoC.Location = new System.Drawing.Point(594, 142);
+            this.txtPrecoC.Location = new System.Drawing.Point(594, 136);
             this.txtPrecoC.MaxLength = 15;
             this.txtPrecoC.Name = "txtPrecoC";
             this.txtPrecoC.Size = new System.Drawing.Size(145, 27);
@@ -247,7 +263,7 @@
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(466, 152);
+            this.label4.Location = new System.Drawing.Point(466, 146);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(122, 20);
             this.label4.TabIndex = 7;
@@ -255,10 +271,10 @@
             // 
             // label6
             // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(3, 206);
+            this.label6.Location = new System.Drawing.Point(3, 208);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(99, 20);
             this.label6.TabIndex = 11;
@@ -269,7 +285,7 @@
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(478, 240);
+            this.label5.Location = new System.Drawing.Point(478, 208);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(110, 20);
             this.label5.TabIndex = 8;
@@ -292,7 +308,7 @@
             this.dateTimePicker1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.dateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(594, 326);
+            this.dateTimePicker1.Location = new System.Drawing.Point(594, 327);
             this.dateTimePicker1.MinDate = new System.DateTime(2025, 1, 1, 0, 0, 0, 0);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(145, 27);
@@ -304,7 +320,7 @@
             // 
             this.txtPrecoV.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtPrecoV.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPrecoV.Location = new System.Drawing.Point(594, 230);
+            this.txtPrecoV.Location = new System.Drawing.Point(594, 198);
             this.txtPrecoV.MaxLength = 15;
             this.txtPrecoV.Name = "txtPrecoV";
             this.txtPrecoV.Size = new System.Drawing.Size(145, 27);
@@ -379,6 +395,72 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // lblaviso1
+            // 
+            this.lblaviso1.AutoSize = true;
+            this.lblaviso1.ForeColor = System.Drawing.Color.Red;
+            this.lblaviso1.Location = new System.Drawing.Point(108, 100);
+            this.lblaviso1.Name = "lblaviso1";
+            this.lblaviso1.Size = new System.Drawing.Size(125, 16);
+            this.lblaviso1.TabIndex = 18;
+            this.lblaviso1.Text = "* campo obrigatório";
+            this.lblaviso1.Visible = false;
+            // 
+            // lblaviso4
+            // 
+            this.lblaviso4.AutoSize = true;
+            this.lblaviso4.ForeColor = System.Drawing.Color.Red;
+            this.lblaviso4.Location = new System.Drawing.Point(594, 100);
+            this.lblaviso4.Name = "lblaviso4";
+            this.lblaviso4.Size = new System.Drawing.Size(125, 16);
+            this.lblaviso4.TabIndex = 19;
+            this.lblaviso4.Text = "* campo obrigatório";
+            this.lblaviso4.Visible = false;
+            // 
+            // lblaviso5
+            // 
+            this.lblaviso5.AutoSize = true;
+            this.lblaviso5.ForeColor = System.Drawing.Color.Red;
+            this.lblaviso5.Location = new System.Drawing.Point(594, 166);
+            this.lblaviso5.Name = "lblaviso5";
+            this.lblaviso5.Size = new System.Drawing.Size(125, 16);
+            this.lblaviso5.TabIndex = 20;
+            this.lblaviso5.Text = "* campo obrigatório";
+            this.lblaviso5.Visible = false;
+            // 
+            // lblaviso6
+            // 
+            this.lblaviso6.AutoSize = true;
+            this.lblaviso6.ForeColor = System.Drawing.Color.Red;
+            this.lblaviso6.Location = new System.Drawing.Point(594, 228);
+            this.lblaviso6.Name = "lblaviso6";
+            this.lblaviso6.Size = new System.Drawing.Size(125, 16);
+            this.lblaviso6.TabIndex = 21;
+            this.lblaviso6.Text = "* campo obrigatório";
+            this.lblaviso6.Visible = false;
+            // 
+            // lblaviso2
+            // 
+            this.lblaviso2.AutoSize = true;
+            this.lblaviso2.ForeColor = System.Drawing.Color.Red;
+            this.lblaviso2.Location = new System.Drawing.Point(108, 166);
+            this.lblaviso2.Name = "lblaviso2";
+            this.lblaviso2.Size = new System.Drawing.Size(125, 16);
+            this.lblaviso2.TabIndex = 22;
+            this.lblaviso2.Text = "* campo obrigatório";
+            this.lblaviso2.Visible = false;
+            // 
+            // lblaviso3
+            // 
+            this.lblaviso3.AutoSize = true;
+            this.lblaviso3.ForeColor = System.Drawing.Color.Red;
+            this.lblaviso3.Location = new System.Drawing.Point(108, 228);
+            this.lblaviso3.Name = "lblaviso3";
+            this.lblaviso3.Size = new System.Drawing.Size(125, 16);
+            this.lblaviso3.TabIndex = 23;
+            this.lblaviso3.Text = "* campo obrigatório";
+            this.lblaviso3.Visible = false;
+            // 
             // AddProduto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -430,5 +512,11 @@
         private System.Windows.Forms.Label lblValidade;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label lblaviso1;
+        private System.Windows.Forms.Label lblaviso4;
+        private System.Windows.Forms.Label lblaviso5;
+        private System.Windows.Forms.Label lblaviso6;
+        private System.Windows.Forms.Label lblaviso2;
+        private System.Windows.Forms.Label lblaviso3;
     }
 }
