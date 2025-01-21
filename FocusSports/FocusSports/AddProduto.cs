@@ -18,7 +18,7 @@ namespace FocusSports
         SqlConnection conn;
         SqlCommand cmd;
         SqlDataAdapter adapt;
-        bool editar = false;
+        bool editar = false; //Variavel para saber se é para editar ou adicionar
         int proId = 0;
 
         public AddProduto()
@@ -48,6 +48,7 @@ namespace FocusSports
                 dateTimePicker1.Value = Convert.ToDateTime(dr["Validade"]);
                 txtNota.Text = Convert.ToString(dr["Nota"]);
                 txtCaminhoImagem.Text = Convert.ToString(dr["CaminhoImg"]);
+                //O system.glob...CultureInfo... é para aparecer ponto em vez da virgula nos numeros que recebemos da tabela
                 txtPrecoV.Text = Convert.ToDouble(dr["PrecoVenda"]).ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
                 txtPrecoC.Text = Convert.ToDouble(dr["PrecoCompra"]).ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
                 pictureBox1.ImageLocation = Convert.ToString(dr["CaminhoImg"]);
@@ -61,7 +62,7 @@ namespace FocusSports
             this.Close();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e) //Botao de carregar imagem
         {
             //Abre a caixa de dialogo para escolher uma imagem para o produto
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -93,7 +94,7 @@ namespace FocusSports
 
         private void textBox4_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Verificar se o caractere pressionado é um número
+            // Verificar se o caractere pressionado não é um número ou teclas de controle
             if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
             {
                 // Cancelar a entrada se não for um número ou uma tecla de controle
@@ -106,7 +107,7 @@ namespace FocusSports
 
         private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Verificar se o caractere pressionado é não é um número ou . ou teclas de controle
+            // Verificar se o caractere pressionado não é um número, teclas de controle ou ponto
             if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != '.')
             {
                 // Cancelar a entrada se não for um número, tecla de controle ou ponto
@@ -115,7 +116,7 @@ namespace FocusSports
                 //Mensagem de aviso
                 MessageBox.Show("Por favor, insira apenas números.", "Atenção!");
             }
-
+           
             // Permitir apenas um ponto decimal
             if (e.KeyChar == '.' && txtPrecoC.Text.Contains("."))
             {
@@ -132,7 +133,7 @@ namespace FocusSports
 
         private void textBox6_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Verificar se o caractere pressionado é um número
+            // Verificar se o caractere pressionado não é um número, teclas de controle ou ponto
             if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != '.')
             {
                 // Cancelar a entrada se não for um número, tecla de controle ou ponto

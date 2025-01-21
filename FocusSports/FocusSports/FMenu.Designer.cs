@@ -39,23 +39,23 @@
             this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip3 = new System.Windows.Forms.MenuStrip();
             this.produtosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip5 = new System.Windows.Forms.MenuStrip();
+            this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip4 = new System.Windows.Forms.MenuStrip();
             this.registarClienteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.opçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tableLayoutCentro = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.menuStrip5 = new System.Windows.Forms.MenuStrip();
-            this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tableLayoutCentro = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutBaixo.SuspendLayout();
             this.flowLayoutCima.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.menuStrip3.SuspendLayout();
+            this.menuStrip5.SuspendLayout();
             this.menuStrip4.SuspendLayout();
             this.menuStrip2.SuspendLayout();
-            this.tableLayoutCentro.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.menuStrip5.SuspendLayout();
+            this.tableLayoutCentro.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutBaixo
@@ -80,9 +80,10 @@
             // 
             this.labelSelecao.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelSelecao.AutoSize = true;
-            this.labelSelecao.Location = new System.Drawing.Point(885, 9);
+            this.labelSelecao.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSelecao.Location = new System.Drawing.Point(885, 7);
             this.labelSelecao.Name = "labelSelecao";
-            this.labelSelecao.Size = new System.Drawing.Size(84, 16);
+            this.labelSelecao.Size = new System.Drawing.Size(100, 20);
             this.labelSelecao.TabIndex = 1;
             this.labelSelecao.Text = "Selecionado";
             this.labelSelecao.Visible = false;
@@ -179,6 +180,26 @@
             this.produtosToolStripMenuItem.Text = "Produtos";
             this.produtosToolStripMenuItem.Click += new System.EventHandler(this.produtosToolStripMenuItem_Click);
             // 
+            // menuStrip5
+            // 
+            this.menuStrip5.BackColor = System.Drawing.Color.White;
+            this.menuStrip5.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clientesToolStripMenuItem});
+            this.menuStrip5.Location = new System.Drawing.Point(177, 0);
+            this.menuStrip5.Name = "menuStrip5";
+            this.menuStrip5.Size = new System.Drawing.Size(92, 28);
+            this.menuStrip5.TabIndex = 7;
+            this.menuStrip5.Text = "menuStrip5";
+            // 
+            // clientesToolStripMenuItem
+            // 
+            this.clientesToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
+            this.clientesToolStripMenuItem.Name = "clientesToolStripMenuItem";
+            this.clientesToolStripMenuItem.Size = new System.Drawing.Size(84, 24);
+            this.clientesToolStripMenuItem.Text = "Clientes";
+            this.clientesToolStripMenuItem.Click += new System.EventHandler(this.clientesToolStripMenuItem_Click);
+            // 
             // menuStrip4
             // 
             this.menuStrip4.BackColor = System.Drawing.Color.White;
@@ -186,7 +207,7 @@
             this.menuStrip4.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.registarClienteToolStripMenuItem});
-            this.menuStrip4.Location = new System.Drawing.Point(419, 0);
+            this.menuStrip4.Location = new System.Drawing.Point(269, 0);
             this.menuStrip4.Name = "menuStrip4";
             this.menuStrip4.Size = new System.Drawing.Size(94, 28);
             this.menuStrip4.TabIndex = 6;
@@ -206,7 +227,7 @@
             this.menuStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.opçõesToolStripMenuItem});
-            this.menuStrip2.Location = new System.Drawing.Point(513, 0);
+            this.menuStrip2.Location = new System.Drawing.Point(363, 0);
             this.menuStrip2.Name = "menuStrip2";
             this.menuStrip2.Size = new System.Drawing.Size(89, 31);
             this.menuStrip2.TabIndex = 4;
@@ -218,6 +239,17 @@
             this.opçõesToolStripMenuItem.Name = "opçõesToolStripMenuItem";
             this.opçõesToolStripMenuItem.Size = new System.Drawing.Size(81, 27);
             this.opçõesToolStripMenuItem.Text = "Opções";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Image = global::FocusSports.Properties.Resources.Focus_Sports_logo_with_a_figure_running_or_practicing_sports__2_;
+            this.pictureBox1.Location = new System.Drawing.Point(284, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(837, 780);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // tableLayoutCentro
             // 
@@ -235,37 +267,6 @@
             this.tableLayoutCentro.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutCentro.Size = new System.Drawing.Size(1405, 786);
             this.tableLayoutCentro.TabIndex = 0;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Image = global::FocusSports.Properties.Resources.Focus_Sports_logo_with_a_figure_running_or_practicing_sports__2_;
-            this.pictureBox1.Location = new System.Drawing.Point(284, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(837, 780);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
-            // menuStrip5
-            // 
-            this.menuStrip5.BackColor = System.Drawing.Color.White;
-            this.menuStrip5.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clientesToolStripMenuItem});
-            this.menuStrip5.Location = new System.Drawing.Point(177, 0);
-            this.menuStrip5.Name = "menuStrip5";
-            this.menuStrip5.Size = new System.Drawing.Size(242, 28);
-            this.menuStrip5.TabIndex = 7;
-            this.menuStrip5.Text = "menuStrip5";
-            // 
-            // clientesToolStripMenuItem
-            // 
-            this.clientesToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
-            this.clientesToolStripMenuItem.Name = "clientesToolStripMenuItem";
-            this.clientesToolStripMenuItem.Size = new System.Drawing.Size(84, 24);
-            this.clientesToolStripMenuItem.Text = "Clientes";
-            this.clientesToolStripMenuItem.Click += new System.EventHandler(this.clientesToolStripMenuItem_Click);
             // 
             // FMenu
             // 
@@ -291,14 +292,14 @@
             this.menuStrip1.PerformLayout();
             this.menuStrip3.ResumeLayout(false);
             this.menuStrip3.PerformLayout();
+            this.menuStrip5.ResumeLayout(false);
+            this.menuStrip5.PerformLayout();
             this.menuStrip4.ResumeLayout(false);
             this.menuStrip4.PerformLayout();
             this.menuStrip2.ResumeLayout(false);
             this.menuStrip2.PerformLayout();
-            this.tableLayoutCentro.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.menuStrip5.ResumeLayout(false);
-            this.menuStrip5.PerformLayout();
+            this.tableLayoutCentro.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -315,8 +316,6 @@
         private System.Windows.Forms.ToolStripMenuItem opçõesToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip3;
         private System.Windows.Forms.ToolStripMenuItem produtosToolStripMenuItem;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutCentro;
         private System.Windows.Forms.Label labelSelecao;
         private System.Windows.Forms.MenuStrip menuStrip4;
         private System.Windows.Forms.ToolStripMenuItem registarClienteToolStripMenuItem;
@@ -324,5 +323,7 @@
         private System.Windows.Forms.Label lblAviso;
         private System.Windows.Forms.MenuStrip menuStrip5;
         private System.Windows.Forms.ToolStripMenuItem clientesToolStripMenuItem;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutCentro;
     }
 }

@@ -15,6 +15,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -72,6 +73,8 @@ namespace FocusSports
             {
                 DataRow dr = dt.Rows[i];
 
+                dataGridProdutos.Rows[i].Cells[3].Style.Format = "C2";
+                dataGridProdutos.Rows[i].Cells[4].Style.Format = "C2";
                 if (dr["Aviso"].ToString() == "Sim")
                 {
                     validade = Convert.ToDateTime(dr["Validade"]);

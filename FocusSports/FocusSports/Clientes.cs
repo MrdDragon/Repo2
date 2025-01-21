@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace FocusSports
 {
@@ -17,12 +18,24 @@ namespace FocusSports
         SqlConnection conn;
         SqlCommand cmd;
         SqlDataAdapter adapt;
+        int id = 0;
+        string permi = "";
 
         public Clientes()
         {
             conn = new SqlConnection(conString);
             InitializeComponent();
             MostrarClientes();
+        }
+
+        public void Permissoes(string permissoes)
+        {
+            string permi = permissoes;
+            if (permissoes != "Administrador")
+            {
+                pBApagar.Visible = false;
+                btnApagar.Visible = false;
+            }
         }
 
         private void MostrarClientes()
@@ -163,6 +176,68 @@ namespace FocusSports
             {
                 button1.PerformClick();
             }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnApagar_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Tem certeza que deseja apagar este registo?", "Confirmação de Exclusão", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                cmd = new SqlCommand("DELETE FROM dbo.Clientes WHERE ClienteID = @clienteid", conn);
+                conn.Open();
+                cmd.Parameters.AddWithValue("@clienteid", id);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                MessageBox.Show("Registo apagado com sucesso!");
+                MostrarClientes();
+            }
+        }
+
+        private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView1.Rows[e.RowIndex].Cells[0].Value != null)
+            {
+                id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
+                
+                if (this.MdiParent is FMenu fmenu)
+                {
+                    fmenu.Seleccao(dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString() + "     " + dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString());
+                  
+                }
+
+            }
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            if (this.MdiParent is FMenu f)
+            {
+                parentForm.AbrirRegistos();
+            }
+            Registar janela_Registar = new Registar();
+            janela_Registar.MdiParent = this.MdiParent;
+            janela_Registar.Permissoes(permi);
+            janela_Registar.Show();
+            janela_Registar.WindowState = FormWindowState.Maximized;
+            
+            this.Close();
+        }
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            Registar janela_Registar = new Registar();
+            janela_Registar.MdiParent = this.MdiParent;
+            janela_Registar.Permissoes(permi);
+            janela_Registar.EditarClientes(id);
+            janela_Registar.Show();
+            janela_Registar.WindowState = FormWindowState.Maximized;
+
+            this.Close();
         }
     }
 }

@@ -15,9 +15,11 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace FocusSports
 {
@@ -28,8 +30,9 @@ namespace FocusSports
         SqlConnection conn;
         SqlCommand cmd;
         SqlDataAdapter adapt;
-        string typuser = "Cliente";
-        
+        string typuser = "Cliente"; //Variavel para saber o tipo de registo
+        bool editar = false; //Variavel para saber se é para editar ou adicionar Clientes
+        int clienteId = 0;
 
         public void Permissoes(string permissoes)
         {
@@ -47,6 +50,33 @@ namespace FocusSports
             conn = new SqlConnection(conString);
             InitializeComponent();
             
+        }
+
+        public void EditarClientes(int id)
+        {
+            clienteId = id;
+            editar = true;
+            conn.Open();
+            cmd = new SqlCommand("select * from dbo.Clientes WHERE ClienteID = @clienteId", conn);
+            cmd.Parameters.AddWithValue("@clienteId", id);
+            adapt = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            adapt.Fill(dt);
+
+            if (dt.Rows.Count > 0)
+            {
+                DataRow dr = dt.Rows[0];
+                txt_Nome.Text = Convert.ToString(dr["NomeCliente"]);
+                txt_Tele.Text = Convert.ToString(dr["Telefone"]);
+                txt_Utilizador.Text = Convert.ToString(dr["Morada"]);
+                txt_Dist.Text = Convert.ToString(dr["Distrito"]);
+                txt_Pais.Text = Convert.ToString(dr["Pais"]);
+                txt_Email.Text = Convert.ToString(dr["EmailCliente"]);
+                txt_Pass.Text = Convert.ToString(dr["CodigoPostal"]);
+                txt_Nota.Text = Convert.ToString(dr["Nota"]);
+            }
+
+            conn.Close();
         }
 
         // Ver os Utilizadores na DataGridView
@@ -97,21 +127,42 @@ namespace FocusSports
         {
             if(tipoUser == "Cliente")
             {
-
-                cmd = new SqlCommand("Insert Into dbo.Clientes(NomeCliente,Telefone,Morada,Distrito,Pais,EmailCliente,CodigoPostal,Nota) values(@nomecliente, @telefone, @morada, @distrito, @pais, @emailcliente, @codigopostal, @nota)", conn);
-                conn.Open();
-                cmd.Parameters.AddWithValue("@nomecliente", txt_Nome.Text);
-                cmd.Parameters.AddWithValue("@telefone", txt_Tele.Text);
-                cmd.Parameters.AddWithValue("@morada", txt_Utilizador.Text);
-                cmd.Parameters.AddWithValue("@distrito", txt_Dist.Text);
-                cmd.Parameters.AddWithValue("@pais", txt_Pais.Text);
-                cmd.Parameters.AddWithValue("@emailcliente", txt_Email.Text);
-                cmd.Parameters.AddWithValue("@codigopostal", txt_Pass.Text);
-                cmd.Parameters.AddWithValue("@nota", txt_Nota.Text);
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                MessageBox.Show("Cliente registado com sucesso!");
-                LimparCampos();
+                if (editar == true)
+                {
+                    cmd = new SqlCommand("UPDATE dbo.Clientes set NomeCliente = @nomecliente, Telefone = @telefone, Morada = @morada, Distrito = @distrito, Pais = @pais, EmailCliente = @emailcliente, CodigoPostal = @codigopostal, Nota = @nota Where ClienteID = @clienteId", conn);
+                    conn.Open();
+                    cmd.Parameters.AddWithValue("@nomecliente", txt_Nome.Text);
+                    cmd.Parameters.AddWithValue("@telefone", txt_Tele.Text);
+                    cmd.Parameters.AddWithValue("@morada", txt_Utilizador.Text);
+                    cmd.Parameters.AddWithValue("@distrito", txt_Dist.Text);
+                    cmd.Parameters.AddWithValue("@pais", txt_Pais.Text);
+                    cmd.Parameters.AddWithValue("@emailcliente", txt_Email.Text);
+                    cmd.Parameters.AddWithValue("@codigopostal", txt_Pass.Text);
+                    cmd.Parameters.AddWithValue("@nota", txt_Nota.Text);
+                    cmd.Parameters.AddWithValue("@clienteId", clienteId);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    MessageBox.Show("Registo Alterado com sucesso!");
+                    LimparCampos();
+                }
+                else
+                {
+                    cmd = new SqlCommand("Insert Into dbo.Clientes(NomeCliente,Telefone,Morada,Distrito,Pais,EmailCliente,CodigoPostal,Nota) values(@nomecliente, @telefone, @morada, @distrito, @pais, @emailcliente, @codigopostal, @nota)", conn);
+                    conn.Open();
+                    cmd.Parameters.AddWithValue("@nomecliente", txt_Nome.Text);
+                    cmd.Parameters.AddWithValue("@telefone", txt_Tele.Text);
+                    cmd.Parameters.AddWithValue("@morada", txt_Utilizador.Text);
+                    cmd.Parameters.AddWithValue("@distrito", txt_Dist.Text);
+                    cmd.Parameters.AddWithValue("@pais", txt_Pais.Text);
+                    cmd.Parameters.AddWithValue("@emailcliente", txt_Email.Text);
+                    cmd.Parameters.AddWithValue("@codigopostal", txt_Pass.Text);
+                    cmd.Parameters.AddWithValue("@nota", txt_Nota.Text);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    MessageBox.Show("Cliente registado com sucesso!");
+                    LimparCampos();
+                }
+                    
             }
             else
             {
@@ -198,6 +249,7 @@ namespace FocusSports
             txt_Tele.Text = "";
         }
 
+        //Mudar as labels da janela para diferentes tipos de utilizadores
         private void btnStocks_Click(object sender, EventArgs e)
         {
             labeldesc.Text = "Pode adicionar à base de dados, mas não pode apagar registos, nem criar novos Utilizadores!";

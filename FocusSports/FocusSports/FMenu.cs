@@ -98,12 +98,16 @@ namespace FocusSports
             }
         }
 
+        public void AbrirRegistos()
+        {
+            registarClienteToolStripMenuItem_Click(null, EventArgs.Empty);
+        }
 
-        //Muda a label em baixo para o produto seletionado
-        public void Seleccao(string produto)
+        //Muda a label em baixo para o seletionado
+        public void Seleccao(string selecionado)
         {
                 labelSelecao.Visible = true;
-                labelSelecao.Text = produto;
+                labelSelecao.Text = selecionado;
             
         }
 
@@ -233,7 +237,7 @@ namespace FocusSports
                 Clientes janela_clientes = new Clientes();
                 janela_clientes.MdiParent = this;
                 tableLayoutCentro.Visible = false;
-                //janela_clientes.Permissoes(permi);
+                janela_clientes.Permissoes(permi);
                 janela_clientes.Show();
                 janela_clientes.WindowState = FormWindowState.Maximized;
                 labelSelecao.Visible = false;
