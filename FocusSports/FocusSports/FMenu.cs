@@ -28,7 +28,7 @@ namespace FocusSports
         SqlConnection conn;
         SqlCommand cmd;
         SqlDataAdapter adapt;
-        
+        int idCliente = 0;
 
         public void Permissoes(string permissoes)
         {
@@ -37,6 +37,7 @@ namespace FocusSports
             if(permissoes != "Vendas")
             {
                 VerificaVS();
+                opçõesToolStripMenuItem.Visible = true;
             }
           
         }
@@ -50,9 +51,27 @@ namespace FocusSports
         //Metodo para ver as validades e stocks
         public void VerificaVS()
         {
-            DateTime dateTime = DateTime.Now.Date.AddMonths(2);
-            
             conn.Open();
+
+            DataTable dt2 = new DataTable();
+            adapt = new SqlDataAdapter("select * from dbo.Opcoes", conn);
+            adapt.Fill(dt2);
+
+            if (dt2.Rows.Count == 0)//Se não houver dados na tabela "opções" insere valores por defeito
+            {
+                cmd = new SqlCommand("Insert Into dbo.Opcoes(Opid,AvisoStock,AvisoValidade) values(@opid, @avisoStock, @avisoValidade)", conn);
+                cmd.Parameters.AddWithValue("@avisoStock", 200);
+                cmd.Parameters.AddWithValue("@avisoValidade", 2);
+                cmd.Parameters.AddWithValue("@opid", 1);
+                cmd.ExecuteNonQuery();
+            }
+
+            DataRow dr2 = dt2.Rows[0];
+            int avisoSt = Convert.ToInt32(dr2["AvisoStock"].ToString());
+            int avisoVal = Convert.ToInt32(dr2["AvisoValidade"].ToString());
+
+            DateTime dateTime = DateTime.Now.Date.AddMonths(avisoVal);
+            
             DataTable dt = new DataTable();
             adapt = new SqlDataAdapter("select * from dbo.Produtos", conn);
             adapt.Fill(dt);
@@ -72,7 +91,7 @@ namespace FocusSports
                         contaValidade++;
                     }
 
-                    if (Convert.ToInt32(dr["Quantidade"]) < 200)
+                    if (Convert.ToInt32(dr["Quantidade"]) < avisoSt)
                     {
                         contaStock++;
                     }
@@ -98,9 +117,11 @@ namespace FocusSports
             }
         }
 
-        public void AbrirRegistos()
+        public void AbrirRegistos(int idC)
         {
+            idCliente = idC;
             registarClienteToolStripMenuItem_Click(null, EventArgs.Empty);
+            
         }
 
         //Muda a label em baixo para o seletionado
@@ -199,6 +220,7 @@ namespace FocusSports
                 janela_Registar.MdiParent = this;
                 tableLayoutCentro.Visible = false;
                 janela_Registar.Permissoes(permi);
+                janela_Registar.EditarClientes(idCliente);
                 janela_Registar.Show();
                 janela_Registar.WindowState = FormWindowState.Maximized;
                 labelSelecao.Visible = false;
@@ -240,6 +262,34 @@ namespace FocusSports
                 janela_clientes.Permissoes(permi);
                 janela_clientes.Show();
                 janela_clientes.WindowState = FormWindowState.Maximized;
+                labelSelecao.Visible = false;
+            }
+        }
+
+        private void opçõesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (FormAberto("Opcoes") != true)
+            {
+                FecharForms();
+                Opcoes janela_opcoes = new Opcoes();
+                janela_opcoes.MdiParent = this;
+                tableLayoutCentro.Visible = false;
+                janela_opcoes.Show();
+                janela_opcoes.WindowState = FormWindowState.Maximized;
+                labelSelecao.Visible = false;
+            }
+        }
+
+        private void encomendaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (FormAberto("Encomendas") != true)
+            {
+                FecharForms();
+                Encomendas janela_encomenda = new Encomendas();
+                janela_encomenda.MdiParent = this;
+                tableLayoutCentro.Visible = false;
+                janela_encomenda.Show();
+                janela_encomenda.WindowState = FormWindowState.Maximized;
                 labelSelecao.Visible = false;
             }
         }

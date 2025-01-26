@@ -60,6 +60,12 @@
       <DependentUpon>Clientes.cs</DependentUpon>
     </Compile>
     <Compile Include="Connecao.cs" />
+    <Compile Include="Encomendas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Encomendas.Designer.cs">
+      <DependentUpon>Encomendas.cs</DependentUpon>
+    </Compile>
     <Compile Include="FMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,6 +77,12 @@
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Opcoes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Opcoes.Designer.cs">
+      <DependentUpon>Opcoes.cs</DependentUpon>
     </Compile>
     <Compile Include="Produtos.cs">
       <SubType>Form</SubType>
@@ -92,11 +104,17 @@
     <EmbeddedResource Include="Clientes.resx">
       <DependentUpon>Clientes.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Encomendas.resx">
+      <DependentUpon>Encomendas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FMenu.resx">
       <DependentUpon>FMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Opcoes.resx">
+      <DependentUpon>Opcoes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Produtos.resx">
       <DependentUpon>Produtos.cs</DependentUpon>

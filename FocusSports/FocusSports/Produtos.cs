@@ -41,6 +41,7 @@ namespace FocusSports
                 btnApagar.Visible = false;
                 pBEditar.Visible = false;
                 btnEditar.Visible = false;
+                btnRemover.Visible = false;
             }
             else if (permissoes == "Stocks")
             {
@@ -58,10 +59,18 @@ namespace FocusSports
 
         public void MostraTodosProdutos()
         {
-            //Adicionamos os meses (dentro dos parenteses) à data actual para comparar se as validades ja la chegaram!
-            DateTime dateTime = DateTime.Now.AddMonths(2);
-
             conn.Open();
+
+            DataTable dt2 = new DataTable();
+            adapt = new SqlDataAdapter("select * from dbo.Opcoes", conn);
+            adapt.Fill(dt2);
+            DataRow dr2 = dt2.Rows[0];
+            int avisoSt = Convert.ToInt32(dr2["AvisoStock"].ToString());
+            int avisoVal = Convert.ToInt32(dr2["AvisoValidade"].ToString());
+
+            //Adicionamos os meses (dentro dos parenteses) à data actual para comparar se as validades ja la chegaram!
+            DateTime dateTime = DateTime.Now.AddMonths(avisoVal);
+
             DataTable dt = new DataTable();
             adapt = new SqlDataAdapter("select * from dbo.Produtos", conn);
             adapt.Fill(dt);
@@ -75,6 +84,7 @@ namespace FocusSports
 
                 dataGridProdutos.Rows[i].Cells[3].Style.Format = "C2";
                 dataGridProdutos.Rows[i].Cells[4].Style.Format = "C2";
+
                 if (dr["Aviso"].ToString() == "Sim")
                 {
                     validade = Convert.ToDateTime(dr["Validade"]);
@@ -85,7 +95,7 @@ namespace FocusSports
                         dataGridProdutos.Rows[i].DefaultCellStyle.ForeColor = Color.White; // Cor do texto
                     }
 
-                    if (Convert.ToInt32(dr["Quantidade"]) < 200) //A quantidade que queremos o aviso de stocks
+                    if (Convert.ToInt32(dr["Quantidade"]) < avisoSt) //A quantidade que queremos o aviso de stocks
                     {
                         dataGridProdutos.Rows[i].DefaultCellStyle.BackColor = Color.DarkRed; // Cor de fundo
                         dataGridProdutos.Rows[i].DefaultCellStyle.ForeColor = Color.White; // Cor do texto
@@ -105,6 +115,12 @@ namespace FocusSports
             adapt.Fill(dt);
             dataGridProdutos.DataSource = dt;
             conn.Close();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                dataGridProdutos.Rows[i].Cells[3].Style.Format = "C2";
+                dataGridProdutos.Rows[i].Cells[4].Style.Format = "C2";
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -264,6 +280,40 @@ namespace FocusSports
             addProduto.Text = "Editar Produto";
             addProduto.EditarProduto(id);
             addProduto.ShowDialog();
+        }
+
+        private void btnRemover_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Tem a certeza que deseja remover aviso deste produto?", "Confirmação de Exclusão", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                cmd = new SqlCommand("UPDATE dbo.Produtos set Aviso = @aviso Where ProdutoID = @produtoId", conn);
+                conn.Open();
+                cmd.Parameters.AddWithValue("@aviso", "Não");
+                cmd.Parameters.AddWithValue("@produtoId", id);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                MessageBox.Show("Aviso removido com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MostraTodosProdutos();
+                if (this.MdiParent is FMenu fMenu) fMenu.VerificaVS(); //Verifica se o formulário pai é o FMenu e chama o método VerificaVS
+            }
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Tem a certeza que deseja incluir produto nos avisos?", "Confirmação de Exclusão", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                cmd = new SqlCommand("UPDATE dbo.Produtos set Aviso = @aviso Where ProdutoID = @produtoId", conn);
+                conn.Open();
+                cmd.Parameters.AddWithValue("@aviso", "Sim");
+                cmd.Parameters.AddWithValue("@produtoId", id);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                MessageBox.Show("Aviso removido com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MostraTodosProdutos();
+                if (this.MdiParent is FMenu fMenu) fMenu.VerificaVS(); //Verifica se o formulário pai é o FMenu e chama o método VerificaVS
+            }
         }
     }
 }

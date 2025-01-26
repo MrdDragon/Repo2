@@ -61,7 +61,7 @@ namespace FocusSports
         private void button_Sub_Click(object sender, EventArgs e)
         {
             conn.Open();
-            cmd = new SqlCommand("Select * From Utilizadores WHERE Utilizador = @Utilizador and Password = @Password", conn);
+            cmd = new SqlCommand("Select * From Utilizadores WHERE Utilizador = @Utilizador and Password = HASHBYTES('SHA2_256', @password)", conn);
             cmd.Parameters.AddWithValue("@Utilizador", txt_Nome.Text);
             cmd.Parameters.AddWithValue("@Password", txt_Pass.Text);
 

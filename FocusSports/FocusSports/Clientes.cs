@@ -1,4 +1,14 @@
-﻿using System;
+﻿//-----------------------------------------------------------------
+//    <copyright file="Clientes.cs"    company="IPCA">
+//     Copyright (c) IPCA-EST 2024. All rights reserved.
+//    </copyright>
+//    <date>2024-11-22</date>
+//    <time>22:05</time>
+//    <version>0.1</version>
+//    <author>Daniel.O & Andreia.M</author>
+//    <description>FocusSports</description>
+//-----------------------------------------------------------------
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,7 +29,6 @@ namespace FocusSports
         SqlCommand cmd;
         SqlDataAdapter adapt;
         int id = 0;
-        string permi = "";
 
         public Clientes()
         {
@@ -79,7 +88,7 @@ namespace FocusSports
                 
                 if (filtroC == "Distrito")
                 {
-                    // Obtém o filho Distrito
+                    // Obtém o filho "Distrito"
                     TreeNode fDistrito = noFiltrar.Nodes[0];
 
                     if (!VerificaNos(fDistrito.Nodes, dr[filtroC].ToString()))
@@ -90,12 +99,12 @@ namespace FocusSports
                 }
                 else
                 {
-                    // Obtém o filho Pais
+                    // Obtém o filho "Pais"
                     TreeNode fPais = noFiltrar.Nodes[1];
 
                     if (!VerificaNos(fPais.Nodes, dr[filtroC].ToString()))
                     {
-                        // Adiciona novo País
+                        // Adiciona novo "País"
                         fPais.Nodes.Add(dr[filtroC].ToString());
                     }
                 }
@@ -206,6 +215,7 @@ namespace FocusSports
                 
                 if (this.MdiParent is FMenu fmenu)
                 {
+                    //Mostra o nome e email do cliente na barra inferior do menu 
                     fmenu.Seleccao(dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString() + "     " + dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString());
                   
                 }
@@ -215,29 +225,20 @@ namespace FocusSports
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (this.MdiParent is FMenu f)
+            if (this.MdiParent is FMenu fMenu)
             {
-                parentForm.AbrirRegistos();
+                fMenu.AbrirRegistos(0);
+                this.Close();
             }
-            Registar janela_Registar = new Registar();
-            janela_Registar.MdiParent = this.MdiParent;
-            janela_Registar.Permissoes(permi);
-            janela_Registar.Show();
-            janela_Registar.WindowState = FormWindowState.Maximized;
-            
-            this.Close();
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            Registar janela_Registar = new Registar();
-            janela_Registar.MdiParent = this.MdiParent;
-            janela_Registar.Permissoes(permi);
-            janela_Registar.EditarClientes(id);
-            janela_Registar.Show();
-            janela_Registar.WindowState = FormWindowState.Maximized;
-
-            this.Close();
+            if (this.MdiParent is FMenu fMenu)
+            {
+                fMenu.AbrirRegistos(id);
+                this.Close();
+            }
         }
     }
 }

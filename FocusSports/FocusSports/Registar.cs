@@ -31,8 +31,9 @@ namespace FocusSports
         SqlCommand cmd;
         SqlDataAdapter adapt;
         string typuser = "Cliente"; //Variavel para saber o tipo de registo
-        bool editar = false; //Variavel para saber se é para editar ou adicionar Clientes
-        int clienteId = 0;
+        bool editarCl = false; //Variavel para saber se é para editar ou adicionar Clientes
+        bool editarUt = false; //Variavel para saber se é para editar ou adicionar Utilizadores
+        int clienteId = 0, utilizadorId = 0;
 
         public void Permissoes(string permissoes)
         {
@@ -42,6 +43,10 @@ namespace FocusSports
                 btnAdmin.Visible = false;
                 btnStocks.Visible = false;
                 btnCliente.Visible = false;
+                pictureBox2.Visible = false;
+                pictureBox3.Visible = false;
+                btnEditar.Visible = false;
+                btnApagar.Visible = false;
             }
         }
 
@@ -49,13 +54,10 @@ namespace FocusSports
         {
             conn = new SqlConnection(conString);
             InitializeComponent();
-            
         }
 
         public void EditarClientes(int id)
         {
-            clienteId = id;
-            editar = true;
             conn.Open();
             cmd = new SqlCommand("select * from dbo.Clientes WHERE ClienteID = @clienteId", conn);
             cmd.Parameters.AddWithValue("@clienteId", id);
@@ -63,8 +65,17 @@ namespace FocusSports
             DataTable dt = new DataTable();
             adapt.Fill(dt);
 
+            if (this.MdiParent is FMenu fMenu)
+            {
+                fMenu.AbrirRegistos(0);
+            }
+
             if (dt.Rows.Count > 0)
             {
+                btnCancelar.Visible = true;
+                clienteId = id;
+                labelregistar.Text = "Editar Registo do Cliente";
+                editarCl = true;
                 DataRow dr = dt.Rows[0];
                 txt_Nome.Text = Convert.ToString(dr["NomeCliente"]);
                 txt_Tele.Text = Convert.ToString(dr["Telefone"]);
@@ -82,52 +93,58 @@ namespace FocusSports
         // Ver os Utilizadores na DataGridView
         private void MostraUtilizadores()
         {
-            conn.Open();
-            DataTable dt = new DataTable();
-            adapt = new SqlDataAdapter("select Utilizador, Nome, Email, Permissoes from dbo.Utilizadores", conn);
-            adapt.Fill(dt);
-            dataGridView1.DataSource = dt;
-            conn.Close();
+            using (SqlConnection conn = new SqlConnection(conString))
+            {
+                conn.Open();
+                DataTable dt = new DataTable();
+                adapt = new SqlDataAdapter("select UtilizadorID, Utilizador, Nome, Email, Permissoes from dbo.Utilizadores", conn);
+                adapt.Fill(dt);
+                dataGridView1.DataSource = dt;
+                conn.Close();
+            }
         }
 
         // Verifica se ja existem o utilizador e email
         private void VerificaUtilizador(string utilizador, string email)
         {
-            conn.Open();
-            DataTable dt = new DataTable();
-            adapt = new SqlDataAdapter("select Utilizador from dbo.Utilizadores WHERE Utilizador = '" + utilizador + "'", conn);
-            adapt.Fill(dt);
-
-            if (dt.Rows.Count == 1)
+            using (SqlConnection conn = new SqlConnection(conString))
             {
-                MessageBox.Show("Utilizador já existente!", "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                txt_Utilizador.Focus();
-            }
-            else
-            {
-                adapt = new SqlDataAdapter("select Email from dbo.Utilizadores WHERE EMAIL = '" + email + "'", conn);
-                DataTable dt2 = new DataTable();
-                adapt.Fill(dt2);
+                conn.Open();
+                DataTable dt = new DataTable();
+                adapt = new SqlDataAdapter("select Utilizador from dbo.Utilizadores WHERE Utilizador = '" + utilizador + "'", conn);
+                adapt.Fill(dt);
 
-                if (dt2.Rows.Count == 1)
+                if (dt.Rows.Count == 1)
                 {
-                    MessageBox.Show("Email já existente!", "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    txt_Email.Focus();
+                    MessageBox.Show("Utilizador já existente!", "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txt_Utilizador.Focus();
                 }
                 else
                 {
-                    NovoUtilizador(typuser);
-                }
+                    adapt = new SqlDataAdapter("select Email from dbo.Utilizadores WHERE EMAIL = '" + email + "'", conn);
+                    DataTable dt2 = new DataTable();
+                    adapt.Fill(dt2);
 
+                    if (dt2.Rows.Count == 1)
+                    {
+                        MessageBox.Show("Email já existente!", "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        txt_Email.Focus();
+                    }
+                    else
+                    {
+                        NovoUtilizador(typuser);
+
+                    }
+                }
+                conn.Close();
             }
-            conn.Close();
         }
 
         private void NovoUtilizador(string tipoUser)
         {
             if(tipoUser == "Cliente")
             {
-                if (editar == true)
+                if (editarCl == true)
                 {
                     cmd = new SqlCommand("UPDATE dbo.Clientes set NomeCliente = @nomecliente, Telefone = @telefone, Morada = @morada, Distrito = @distrito, Pais = @pais, EmailCliente = @emailcliente, CodigoPostal = @codigopostal, Nota = @nota Where ClienteID = @clienteId", conn);
                     conn.Open();
@@ -166,20 +183,41 @@ namespace FocusSports
             }
             else
             {
-                cmd = new SqlCommand("Insert Into dbo.Utilizadores(Utilizador,Nome,Email,Permissoes,Password) VALUES(@utilizador,@nome,@email,@permissoes,@password)", conn);
-                conn.Open();
-                cmd.Parameters.AddWithValue("@utilizador", txt_Utilizador.Text);
-                cmd.Parameters.AddWithValue("@nome", txt_Nome.Text);
-                cmd.Parameters.AddWithValue("@email", txt_Email.Text);
-                cmd.Parameters.AddWithValue("@password", txt_Pass.Text);
-                cmd.Parameters.AddWithValue("@permissoes", tipoUser);
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                MessageBox.Show("Utilizador registado com sucesso!");
-                MudarLabels();
-
+                if(editarUt == true)
+                {
+                    using (SqlConnection conn = new SqlConnection(conString))
+                    {
+                        cmd = new SqlCommand("UPDATE dbo.Utilizadores set Nome = @nome, Email = @email, Utilizador = @utilizador Where UtilizadorID = @utilizadorId", conn);
+                        conn.Open();
+                        cmd.Parameters.AddWithValue("@utilizador", txt_Utilizador.Text);
+                        cmd.Parameters.AddWithValue("@nome", txt_Nome.Text);
+                        cmd.Parameters.AddWithValue("@email", txt_Email.Text);
+                        cmd.Parameters.AddWithValue("UtilizadorID", utilizadorId);
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                        MessageBox.Show("Utilizador editado com sucesso!");
+                        MudarLabels();
+                    }
+                        
+                }
+                else
+                {
+                    using (SqlConnection conn = new SqlConnection(conString))
+                    {
+                        cmd = new SqlCommand("Insert Into dbo.Utilizadores(Utilizador, Nome, Email, Permissoes, Password) VALUES (@utilizador, @nome, @email, @permissoes, HASHBYTES('SHA2_256', @password))", conn);
+                        conn.Open();
+                        cmd.Parameters.AddWithValue("@utilizador", txt_Utilizador.Text);
+                        cmd.Parameters.AddWithValue("@nome", txt_Nome.Text);
+                        cmd.Parameters.AddWithValue("@email", txt_Email.Text);
+                        cmd.Parameters.AddWithValue("@password", txt_Pass.Text);
+                        cmd.Parameters.AddWithValue("@permissoes", tipoUser);
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                        MessageBox.Show("Utilizador registado com sucesso!");
+                        MudarLabels();
+                    }
+                }
             }
-
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -191,14 +229,29 @@ namespace FocusSports
         {
             if(typuser != "Cliente")
             {
-                if (txt_Utilizador.Text != "" && txt_Pass.Text != "" && txt_Email.Text != "" && txt_Nome.Text != "")
+                if (editarUt == true)
                 {
-                    VerificaUtilizador(txt_Utilizador.Text, txt_Email.Text);
+                    if (txt_Utilizador.Text != "" && txt_Email.Text != "" && txt_Nome.Text != "")
+                    {
+                        NovoUtilizador(typuser);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Preencha os campos! (Utilizador, Email, Nome)");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Preencha todos os campos!");
+                    if (txt_Utilizador.Text != "" && txt_Pass.Text != "" && txt_Email.Text != "" && txt_Nome.Text != "")
+                    {
+                        VerificaUtilizador(txt_Utilizador.Text, txt_Email.Text);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Preencha todos os campos!");
+                    }
                 }
+                
             }
             else
             {
@@ -210,9 +263,7 @@ namespace FocusSports
                 {
                     MessageBox.Show("Preencha todos os campos!");
                 }
-               
             }
-
         }
 
         //Muda as Labels para registar Utilizadores em vez de Clientes e limpa os campos
@@ -235,6 +286,7 @@ namespace FocusSports
             label9.Visible = false;
             dataGridView1.Visible = true;
             MostraUtilizadores();
+            btnCancelar.Visible = false;
         }
 
         private void LimparCampos()
@@ -247,6 +299,8 @@ namespace FocusSports
             txt_Nota.Text = "";
             txt_Pais.Text = "";
             txt_Tele.Text = "";
+            editarCl = false;
+            editarUt = false;
         }
 
         //Mudar as labels da janela para diferentes tipos de utilizadores
@@ -285,6 +339,11 @@ namespace FocusSports
             labelregistar.Text = "Registar Cliente";
             checkBox1.Visible = false;
             dataGridView1.Visible = false;
+            LimparCampos();
+            pictureBox2.Visible = false;
+            pictureBox3.Visible = false;
+            btnEditar.Visible = false;
+            btnApagar.Visible = false;
         }
 
         private void btnUti_Click(object sender, EventArgs e)
@@ -333,6 +392,70 @@ namespace FocusSports
             {
                 e.Handled = true;
             }
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            LimparCampos();
+            clienteId = 0;
+            btnCancelar.Visible = false;
+        }
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            
+            conn.Open();
+            cmd = new SqlCommand("select * from dbo.Utilizadores WHERE UtilizadorID = @utilizadorId", conn);
+            cmd.Parameters.AddWithValue("@utilizadorId", utilizadorId);
+            adapt = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            adapt.Fill(dt);
+            conn.Close();
+
+            if (dt.Rows.Count > 0)
+            {
+                editarUt = true;
+                DataRow dr = dt.Rows[0];
+                txt_Nome.Text = dr["Nome"].ToString();
+                txt_Email.Text = dr["Email"].ToString();
+                txt_Utilizador.Text = dr["Utilizador"].ToString();
+            }
+        }
+
+        private void btnApagar_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Tem certeza que deseja apagar este utilizador?", "Confirmação de Exclusão", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                cmd = new SqlCommand("DELETE FROM dbo.Utilizadores WHERE UtilizadorID = @utilizadorid", conn);
+                conn.Open();
+                cmd.Parameters.AddWithValue("@utilizadorid", utilizadorId);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                MessageBox.Show("Registo apagado com sucesso!");
+                MostraUtilizadores();
+            }
+        }
+
+        private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView1.Rows[e.RowIndex].Cells[0].Value != null)
+            {
+                utilizadorId = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
+                pictureBox2.Visible = true;
+                pictureBox3.Visible = true;
+                btnEditar.Visible = true;
+                btnApagar.Visible = true;
+                btnEditar.Enabled = true;
+                btnApagar.Enabled = true;
+
+                if (this.MdiParent is FMenu fmenu)
+                {
+                    fmenu.Seleccao(dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString());
+                }
+
+            }
+
         }
     }
 }
