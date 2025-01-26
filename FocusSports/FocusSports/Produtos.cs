@@ -9,17 +9,10 @@
 //    <description>FocusSports</description>
 //-----------------------------------------------------------------
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace FocusSports
 {
@@ -220,6 +213,8 @@ namespace FocusSports
                     adapt = new SqlDataAdapter("select * from dbo.Produtos WHERE ProdutoID LIKE '%" + txtId.Text + "%'", conn);
                     adapt.Fill(dt);
                     dataGridProdutos.DataSource = dt;
+                    dataGridProdutos.Columns["PrecoVenda"].DefaultCellStyle.Format = "C2";
+                    dataGridProdutos.Columns["PrecoCompra"].DefaultCellStyle.Format = "C2";
                     conn.Close();
                 }
                 catch (Exception)
@@ -245,6 +240,8 @@ namespace FocusSports
                     adapt = new SqlDataAdapter("select * from dbo.Produtos WHERE NomeProduto LIKE '%" + txtNome.Text + "%'", conn);
                     adapt.Fill(dt);
                     dataGridProdutos.DataSource = dt;
+                    dataGridProdutos.Columns["PrecoVenda"].DefaultCellStyle.Format = "C2";
+                    dataGridProdutos.Columns["PrecoCompra"].DefaultCellStyle.Format = "C2";
                     conn.Close();
                 }
                 catch (Exception)

@@ -1,8 +1,14 @@
-﻿using System;
+﻿//-----------------------------------------------------------------
+//    <copyright file="Connecao.cs"    company="IPCA">
+//     Copyright (c) IPCA-EST 2024. All rights reserved.
+//    </copyright>
+//    <date>2024-11-22</date>
+//    <time>22:05</time>
+//    <version>0.1</version>
+//    <author>Daniel.O & Andreia.M</author>
+//    <description>FocusSports</description>
+//-----------------------------------------------------------------
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FocusSports
 {

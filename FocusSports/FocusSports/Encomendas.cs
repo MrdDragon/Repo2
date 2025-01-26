@@ -10,15 +10,10 @@
 //-----------------------------------------------------------------
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace FocusSports
 {
@@ -39,6 +34,16 @@ namespace FocusSports
             MostraTodosProdutos();
         }
 
+        public void Permissoes(string permissoes)
+        {
+            if (permissoes != "Administrador")
+            {
+                pictureBox3.Visible = false;
+                pictureBox2.Visible = false;
+                btnHist.Visible = false;
+                btnVender.Visible = false;
+            }
+        }
         public void ClienteID(int id, int utId)
         {
             utilizadorId = utId;
@@ -216,7 +221,9 @@ namespace FocusSports
             conn.Open();
 
             DataTable dt = new DataTable();
-            adapt = new SqlDataAdapter("SELECT Vendas.VendaID, Clientes.NomeCliente, Clientes.Pais, Vendas.DataVenda, Vendas.TotalVenda, Utilizadores.Utilizador FROM Clientes INNER JOIN Vendas ON Clientes.ClienteID = Vendas.ClienteID INNER JOIN Utilizadores ON Vendas.UtilizadorID = Utilizadores.UtilizadorID", conn);
+            adapt = new SqlDataAdapter("SELECT Vendas.VendaID, Clientes.NomeCliente, Clientes.Pais, Vendas.DataVenda, Vendas.TotalVenda," +
+                " Utilizadores.Utilizador FROM Clientes INNER JOIN Vendas ON Clientes.ClienteID = Vendas.ClienteID INNER JOIN Utilizadores ON" +
+                " Vendas.UtilizadorID = Utilizadores.UtilizadorID", conn);
             adapt.Fill(dt);
             dataGridProdutos.DataSource = dt;
 

@@ -9,16 +9,14 @@
 //    <description>FocusSports</description>
 //-----------------------------------------------------------------
 using System;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace FocusSports
 {
-    
+
     public partial class Form_Login : Form
     {
         
@@ -160,6 +158,7 @@ namespace FocusSports
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            //Foi para facilitar a analise do software
             this.Hide();
             FMenu fMenu = new FMenu();
             fMenu.Permissoes("Administrador", 5);

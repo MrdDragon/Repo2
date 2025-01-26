@@ -9,14 +9,8 @@
 //    <description>FocusSports</description>
 //-----------------------------------------------------------------
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FocusSports
@@ -300,6 +294,7 @@ namespace FocusSports
                 janela_encomenda.MdiParent = this;
                 tableLayoutCentro.Visible = false;
                 janela_encomenda.ClienteID(idCli, utilizadorId);
+                janela_encomenda.Permissoes(permi);
                 janela_encomenda.Show();
                 janela_encomenda.WindowState = FormWindowState.Maximized;
                 labelSelecao.Visible = false;
