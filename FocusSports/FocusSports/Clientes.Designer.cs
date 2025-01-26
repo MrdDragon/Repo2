@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Distrito");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Pais");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Filtrar por:", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Distrito");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Pais");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Filtrar por:", new System.Windows.Forms.TreeNode[] {
+            treeNode7,
+            treeNode8});
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Clientes));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -51,6 +51,7 @@
             this.btnEditar = new System.Windows.Forms.Button();
             this.pBApagar = new System.Windows.Forms.PictureBox();
             this.btnApagar = new System.Windows.Forms.Button();
+            this.btnEncomenda = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -100,14 +101,14 @@
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Bisque;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Bisque;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(228, 229);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -123,12 +124,14 @@
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 3;
+            this.tableLayoutPanel2.ColumnCount = 4;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 362F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 99.99999F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 237F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 247F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 293F));
             this.tableLayoutPanel2.Controls.Add(this.txtNome, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.button1, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnEncomenda, 3, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(228, 4);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -201,14 +204,14 @@
             this.treeView1.Location = new System.Drawing.Point(3, 4);
             this.treeView1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.treeView1.Name = "treeView1";
-            treeNode1.Name = "NoDistrito";
-            treeNode1.Text = "Distrito";
-            treeNode2.Name = "NoPais";
-            treeNode2.Text = "Pais";
-            treeNode3.Name = "NoFiltro";
-            treeNode3.Text = "Filtrar por:";
+            treeNode7.Name = "NoDistrito";
+            treeNode7.Text = "Distrito";
+            treeNode8.Name = "NoPais";
+            treeNode8.Text = "Pais";
+            treeNode9.Name = "NoFiltro";
+            treeNode9.Text = "Filtrar por:";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3});
+            treeNode9});
             this.treeView1.Size = new System.Drawing.Size(212, 311);
             this.treeView1.TabIndex = 3;
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
@@ -320,6 +323,24 @@
             this.btnApagar.UseVisualStyleBackColor = true;
             this.btnApagar.Click += new System.EventHandler(this.btnApagar_Click);
             // 
+            // btnEncomenda
+            // 
+            this.btnEncomenda.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnEncomenda.Enabled = false;
+            this.btnEncomenda.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.btnEncomenda.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnEncomenda.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.btnEncomenda.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEncomenda.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEncomenda.Location = new System.Drawing.Point(818, 143);
+            this.btnEncomenda.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnEncomenda.Name = "btnEncomenda";
+            this.btnEncomenda.Size = new System.Drawing.Size(176, 72);
+            this.btnEncomenda.TabIndex = 3;
+            this.btnEncomenda.Text = "Fazer Encomenda";
+            this.btnEncomenda.UseVisualStyleBackColor = true;
+            this.btnEncomenda.Click += new System.EventHandler(this.btnEncomenda_Click);
+            // 
             // Clientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -367,5 +388,6 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.PictureBox pBApagar;
+        private System.Windows.Forms.Button btnEncomenda;
     }
 }

@@ -5,7 +5,7 @@
 //    <date>2024-11-22</date>
 //    <time>22:05</time>
 //    <version>0.1</version>
-//    <author>D.Oliveira</author>
+//    <author>Daniel.O & Andreia.M</author>
 //    <description>FocusSports</description>
 //-----------------------------------------------------------------
 using System;

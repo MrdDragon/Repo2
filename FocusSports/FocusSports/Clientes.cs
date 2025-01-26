@@ -217,7 +217,7 @@ namespace FocusSports
                 {
                     //Mostra o nome e email do cliente na barra inferior do menu 
                     fmenu.Seleccao(dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString() + "     " + dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString());
-                  
+                    btnEncomenda.Enabled = true;
                 }
 
             }
@@ -237,6 +237,15 @@ namespace FocusSports
             if (this.MdiParent is FMenu fMenu)
             {
                 fMenu.AbrirRegistos(id);
+                this.Close();
+            }
+        }
+
+        private void btnEncomenda_Click(object sender, EventArgs e)
+        {
+            if (this.MdiParent is FMenu fMenu)
+            {
+                fMenu.AbrirEncomendas(id);
                 this.Close();
             }
         }

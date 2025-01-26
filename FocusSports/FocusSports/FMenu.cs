@@ -3,9 +3,9 @@
 //     Copyright (c) IPCA-EST 2024. All rights reserved.
 //    </copyright>
 //    <date>2024-11-22</date>
-//    <time>22:01</time>
+//    <time>22:05</time>
 //    <version>0.1</version>
-//    <author>D.Oliveira</author>
+//    <author>Daniel.O & Andreia.M</author>
 //    <description>FocusSports</description>
 //-----------------------------------------------------------------
 using System;
@@ -28,13 +28,14 @@ namespace FocusSports
         SqlConnection conn;
         SqlCommand cmd;
         SqlDataAdapter adapt;
-        int idCliente = 0;
+        int idCliente = 0, utilizadorId = 0, idCli= 0;
 
-        public void Permissoes(string permissoes)
+        public void Permissoes(string permissoes, int utId)
         {
             permi = permissoes;
+            utilizadorId = utId;
 
-            if(permissoes != "Vendas")
+            if (permissoes != "Vendas")
             {
                 VerificaVS();
                 opçõesToolStripMenuItem.Visible = true;
@@ -124,6 +125,16 @@ namespace FocusSports
             
         }
 
+        public void AbrirEncomendas(int idClie)
+        {
+            idCli = idClie;
+            encomendaToolStripMenuItem_Click(null, EventArgs.Empty);
+        }
+        public void AbrirClientes()
+        {
+            clientesToolStripMenuItem_Click(null, EventArgs.Empty);
+        }
+
         //Muda a label em baixo para o seletionado
         public void Seleccao(string selecionado)
         {
@@ -172,8 +183,8 @@ namespace FocusSports
             if (this.MdiChildren.Length > 0) 
             {
                 foreach (Form f in this.MdiChildren)
-                { 
-                    f.Close();
+                {
+                        f.Close();
                 }
             }
 
@@ -288,6 +299,7 @@ namespace FocusSports
                 Encomendas janela_encomenda = new Encomendas();
                 janela_encomenda.MdiParent = this;
                 tableLayoutCentro.Visible = false;
+                janela_encomenda.ClienteID(idCli, utilizadorId);
                 janela_encomenda.Show();
                 janela_encomenda.WindowState = FormWindowState.Maximized;
                 labelSelecao.Visible = false;

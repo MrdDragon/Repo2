@@ -3,9 +3,9 @@
 //     Copyright (c) IPCA-EST 2024. All rights reserved.
 //    </copyright>
 //    <date>2024-11-22</date>
-//    <time>22:01</time>
+//    <time>22:05</time>
 //    <version>0.1</version>
-//    <author>D.Oliveira</author>
+//    <author>Daniel.O & Andreia.M</author>
 //    <description>FocusSports</description>
 //-----------------------------------------------------------------
 using System;
@@ -54,6 +54,7 @@ namespace FocusSports
         {
             conn = new SqlConnection(conString);
             InitializeComponent();
+            txt_Pass.Enabled = true;
         }
 
         public void EditarClientes(int id)
@@ -399,6 +400,7 @@ namespace FocusSports
             LimparCampos();
             clienteId = 0;
             btnCancelar.Visible = false;
+            txt_Pass.Enabled = true;
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
@@ -419,6 +421,8 @@ namespace FocusSports
                 txt_Nome.Text = dr["Nome"].ToString();
                 txt_Email.Text = dr["Email"].ToString();
                 txt_Utilizador.Text = dr["Utilizador"].ToString();
+                btnCancelar.Visible = true;
+                txt_Pass.Enabled = false;
             }
         }
 
